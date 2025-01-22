@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Accurate Online | Import Database Envision v2.0.2</title>
+    <link rel="stylesheet" href="./plugin/datatables.min.css" />
+    <link rel="stylesheet" href="./plugin/sweetalert2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="./plugin/lodash.min.js"></script>
+    <script src="./plugin/vue.global.js"></script>
+    <script src="./plugin/xlsx.full.min.js"></script>
+    <script src="./plugin/axios.min.js"></script>
+    <script src="./plugin/sweetalert2.all.min.js"></script>
+    <script src="./plugin/moment.min.js"></script>
+    <script src="./plugin/html2pdf.bundle.min.js"></script>
+
+    <script src="./plugin/datatables.min.js"></script>
+    <script src="./plugin/jquery.number.min.js"></script>
+    
+    <!-- Datetime -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.js" integrity="sha512-s0SB4i9ezk9SRyV1Glrj/w5xS5ExSxXiN44fQeV9GYOtExbVWnC+mUsUyZdIYv6qXL0xe1qvpe0h1kk56gsgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.css" integrity="sha512-WlaNl0+Upj44uL9cq9cgIWSobsjEOD1H7GK1Ny1gmwl43sO0QAUxVpvX2x+5iQz/C60J3+bM7V07aC/CNWt/Yw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Datatables Plugin -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.6.0/css/select.dataTables.min.css">
+    <script src="https://cdn.datatables.net/select/1.6.0/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+
+    <!-- Print JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js" integrity="sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Terbilang -->
+    <script src="https://unpkg.com/@develoka/angka-terbilang-js/index.min.js"></script>
+    
+    <script>
+      const { createApp } = Vue;
+    </script>
+    <style>
+      @media print{
+        @page {
+            size: 10in 14in ;
+            bleed: 6mm;
+            marks: crop cross;
+            font-family: arial;
+        }
+        @page:first {
+            size: 10in 14in ;
+            bleed: 6mm;
+            margin:0px;
+            padding:0px;
+            marks: crop cross;
+        }
+        .chapter{
+            margin:0px;
+            padding:0px;
+            min-width: 1124;
+        }
+      }       
+    </style>
+  </head>
+  <body>
+    <div id="App">
+      <div class="container">
+        <div class="row row-cols-lg-auto g-3 align-items-center" id="print-pembayaran">
+            <div class="col-md-12" v-for="(pembayaran, index) in printOutPembayaranData">
+              <div class="card border-0" v-bind:aria-label="'pdf-page-'+z" v-bind:class="(index % 2) == 0? 'chapter' : ''">
+                <div class="card-body">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td class="" style="border-bottom: 1px solid black">
+                          <img style="width:181px; background-color: hsl(0, 0%, 90%);" src="data:image/jpg;base64,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">
+                        </td>
+                        <td colspan="3" class="" style="padding-left:12px; border-bottom: 1px solid black">
+                          <h4 style="font-size:22px">PT. ENVISION</h4>
+                          <p style="white-space: pre-wrap; font-size: 15px;">
+                            {{getCabang(pembayaran.branch.id)}}
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="text-center" style="font-family: times new roman;">
+                          <b><span style="font-size:24px;letter-spacing:5px;">KWITANSI</span> <br> No. : {{pembayaran.number}}</b>
+                        </td>
+                      </tr>
+                      <tr style="font-size:15px;">
+                        <td>
+                          <b><u>Sudah Terima Dari</u></b><br>
+                          <span style="font-style: italic;">Received From</span>
+                        </td>
+                        <td colspan="3" class=" text-center" style="border-bottom: 1px solid black"><b>{{pembayaran.customer.name}}</b></td>
+                      </tr>
+                      <tr style="font-size:15px;">
+                        <td>
+                          <b><u>Untuk Tagihan No.</u></b><br>
+                          <span style="font-style: italic;">Billing No. Reference</span>
+                        </td>
+                        <td class=" text-center" style="border-bottom: 1px solid black">
+                          <template v-for="invoice in pembayaran.detailInvoice">
+                            <b> {{invoice.number}} </b>
+                            <br>
+                          </template>
+                        </td>
+                        <td class="text-center" width="5%">
+                          <b><u>Tanggal</u></b><br>
+                          <span style="font-style: italic;">Date</span>
+                        </td>
+                        <td class="text-center" style="border-bottom: 1px solid black">
+                          <template v-for="invoice in pembayaran.detailInvoice">
+                            <b> {{getMoment(invoice.date)}} </b>
+                            <br>
+                          </template>
+                        </td>
+                      </tr>
+                      <tr style="font-size:15px;">
+                        <td>
+                          <b><u>Jumlah Uang</u></b><br>
+                          <span style="font-style: italic;">The Amount Of</span>
+                        </td>
+                        <td colspan="3" class="text-center" style="border-bottom: 1px solid black">
+                          <b>{{getNumber(pembayaran.chequeAmount + pembayaran.totalDiscount)}}</b>
+                          <hr style="margin:0px;opacity: 1;">
+                          ({{getAngkaTerbilang(pembayaran.chequeAmount + pembayaran.totalDiscount)}})
+                        </td>
+                      </tr>
+                      <tr style="font-size:15px;">
+                        <td>
+                          <b><u>Untuk Pembayaran</u></b><br>
+                          <span style="font-style: italic;">Payment For</span>
+                        </td>
+                        <td colspan="3" class="text-center" style="border-bottom: 1px solid black">
+                          <b>{{pembayaran.charField2}}</b><br>
+                          <hr style="margin:0px;opacity: 1;">
+                          {{pembayaran.charField3}}
+                        </td>
+                      </tr>
+                      <tr style="font-size:17px;">
+                        <td class="text-center"><span style="margin-top:17px; display:block;">Jumlah</span></td>
+                        <td><span class="border" style="width:40%; margin-top:15px;padding: 3px 7px;display:block; border:1px solid black !important"><b class="float-left">Rp</b><b class="float-end">{{getNumber(pembayaran.chequeAmount + pembayaran.totalDiscount)}}</b></span></td>
+                        <td colspan="2" class="text-center">{{pembayaran.branch.name}}, {{pembayaran.transDateView}}</td>
+                      </tr>
+                      <tr style="font-size:17px;">
+                        <td class="text-center">Bank</td>
+                        <td><span><b>{{pembayaran.bank.name}}</b></span></td>
+                        <td colspan="2" rowspan="3" class="text-center" height="105"><img height="105" width="140" v-bind:src="printSetting.signature" v-if="printSetting.isSignature"></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr style="font-size:17px;">
+                        <td colspan="2">&nbsp;</td>
+                        <td colspan="2" class="text-center">
+                          {{printSetting.name}}
+                          <hr style="margin:auto;width:auto; border-bottom: 1px solid black; opacity: 1;">
+                          {{printSetting.department}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+              <hr>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <script>
+      const App = createApp({
+        data() {
+            return {
+                printOutPembayaranData: [],
+                printSetting:{
+                  name: 'Hizkia',
+                  department: 'Finance',
+                  signature: 'data:image/jpg;base64,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',
+                  isSignature: false,
+                  header: {
+                      "gandaria": "Gandaria 8 Office Tower Lantai 15 Unit G Kebayoran Lama Jakarta Selatan 12240\nTelp: (021) 2905 2905 / (021) 2930 4112 Fax : (021) 2905 2906",
+                      "bekasi": "Gandaria 8 Office Tower Lantai 15 Unit G Kebayoran Lama Jakarta Selatan 12240\nTelp: (021) 2905 2905 / (021) 2930 4112 Fax : (021) 2905 2906",
+                      "kasablanka": "Office Prudential Centre Lt. 5th Unit H Kawasan Kota Kasablanka Mall Menteng Dalam, Tebet, Jakarta Selatan 12870 - Indonesia\nTelp : (021) 2946 5005 | 06 Fax : (021) 2982 0225",
+                      "surabaya": "PLD (Tower D) Waterplace Residence Jl. Pakuwon Indah Timur - No. 3-5 Kel. Babatan, Kec. Wiyung, Surabaya, Jawa Timur\nTelp : (031) 7393 400 | 700"
+                  }
+                }
+            }
+        },
+        created() {
+            let self = this;
+        },
+        updated() {
+            let self = this;
+        },
+        watch: {
+            'step': function (newVal) {
+                // Code
+            }
+        },
+        computed: {
+            publishedBooksMessage() {
+                return 'Hello'
+            }
+        },
+        methods: {
+            getNumber(v){
+              return $.number(v);
+            },
+            getMoment(date){
+              return moment(date, 'DD/MM/YYYY').format('DD MMM YYYY');
+            },
+            getAngkaTerbilang(angka){
+              return _.startCase(angkaTerbilang(angka));
+            },
+            getCabang(branchId){
+              let self = this;
+              switch (branchId) {
+                case 52:
+                    return self.printSetting.header.surabaya;
+                  break;
+                case 50:
+                    return self.printSetting.header.gandaria;
+                  break;
+                case 350:
+                    return self.printSetting.header.bekasi;
+                  break;
+                case 101:
+                    return self.printSetting.header.kasablanka;
+                break;
+                default:
+                  return self.printSetting.header.kasablanka;
+                  break;
+              }
+            }
+        },
+        mounted() {
+            // console.log('mounted')
+        }
+      }).mount('#App')
+
+      // Call in parent iframe = window.postMessage("Hello data from Homepage");
+      window.addEventListener("message", function(event){
+        let data = JSON.parse(atob(event.data))
+        // console.log(data);
+        switch (data.type) {
+            case 'Pembayaran Data':
+                // console.log(data.data.data);
+                App.$data.printOutPembayaranData = data.data.data;
+                break;
+        
+            case 'Print Setting':
+                App.$data.printSetting = data.data;
+                break;
+        }
+      });
+    </script>
+  </body>
+</html>

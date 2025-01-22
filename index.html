@@ -1,0 +1,3034 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Accurate Online | Import Database Envision v3.7.9</title>
+    <link rel="stylesheet" href="./plugin/datatables.min.css" />
+    <link rel="stylesheet" href="./plugin/sweetalert2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css" integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="./plugin/lodash.min.js"></script>
+    <script src="./plugin/vue.global.js"></script>
+    <script src="./plugin/xlsx.full.min.js"></script>
+    <script src="./plugin/axios.min.js"></script>
+    <script src="./plugin/sweetalert2.all.min.js"></script>
+    <script src="./plugin/moment.min.js"></script>
+    <script src="./plugin/html2pdf.bundle.min.js"></script>
+
+    <script src="./plugin/datatables.min.js"></script>
+    <script src="./plugin/jquery.number.min.js"></script>
+    
+    <!-- Datetime -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.js" integrity="sha512-s0SB4i9ezk9SRyV1Glrj/w5xS5ExSxXiN44fQeV9GYOtExbVWnC+mUsUyZdIYv6qXL0xe1qvpe0h1kk56gsgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.min.css" integrity="sha512-WlaNl0+Upj44uL9cq9cgIWSobsjEOD1H7GK1Ny1gmwl43sO0QAUxVpvX2x+5iQz/C60J3+bM7V07aC/CNWt/Yw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Datatables Plugin -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.6.0/css/select.dataTables.min.css">
+    <script src="https://cdn.datatables.net/select/1.6.0/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Print JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.js" integrity="sha512-/fgTphwXa3lqAhN+I8gG8AvuaTErm1YxpUjbdCvwfTMyv8UZnFyId7ft5736xQ6CyQN4Nzr21lBuWWA9RTCXCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+      const { createApp } = Vue;
+    </script>
+    <style>
+      .email:first-letter{
+        text-transform: uppercase;
+      }     
+      .btn-primary {
+        background-image: linear-gradient(to right, #FF512F 0%, #DD2476  51%, #FF512F  100%);
+        text-align: center;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;            
+        box-shadow: 0 0 20px #eee;
+        border-radius: 4px;
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      .btn-primary:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+        background-color: transparent;
+        border-color: transparent;
+      }
+
+      body {
+        padding-right: 0 !important;
+      }
+
+      div.dt-buttons {
+    position: initial;
+    float: left;
+  }
+  
+  div.dt-buttons > .buttons-show-selected {
+    padding: 2px 6px;
+    margin-right: 5px;
+  }
+  
+  div.dt-buttons > .buttons-select-all {
+    padding: 2px 6px;
+    margin-right: 5px;
+  }
+  
+  div.dt-buttons > .buttons-select-none {
+    padding: 2px 6px;
+  }
+
+  .btn-datatables{
+    padding: 2px 6px;
+    margin-right: 4px;
+  }
+  
+  .dataTables_scroll {
+    margin-top: 10px;
+  }
+
+.table th, .table td {
+  /* padding: 1rem; */
+  vertical-align: top;
+  border-top: 1px solid #e9ecef;
+}
+
+*:focus {
+  outline:none !important;
+  box-shadow: none !important;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection {
+  border-color:none;
+  box-shadow: none;
+}
+
+.btn-xs-custome{
+  padding-top:2px;
+  padding-bottom:2px;
+}
+
+.btn:focus {
+  border-color: #FFFFFF;
+  outline: none;
+}
+         
+    </style>
+  </head>
+  <body>
+    <div id="App">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">ENVISION</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" :class="{'active' : page == 'invoice'}" aria-current="page" href="#" @click="setPage('invoice')"><i class="fas fa-file-invoice"></i> Invoice</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" :class="{'active' : page == 'pembayaran'}" href="#" @click="setPage('pembayaran')"><i class="fas fa-receipt"></i> Invoice Receipt</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" :class="{'active' : page == 'customer'}" href="#" @click="setPage('customer')"><i class="fas fa-receipt"></i> Customer</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <span  class="email"><i class="fas fa-user-circle"></i> {{email}}</span>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <!-- Invoice -->
+        <div id="invoice" v-bind:hidden="page != 'invoice' && !waitPage" :style="waitPage ? {opacity: 0} : {opacity: 1}">
+          <h5 class="mt-4"># Invoice</h5>
+          <nav class="mt-4">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="invoices-tab" data-bs-toggle="tab" data-bs-target="#invoices" type="button" role="tab" aria-controls="invoices" aria-selected="false">Invoices</button>
+                  <button class="nav-link" id="piutang-tab" data-bs-toggle="tab" data-bs-target="#piutang" type="button" role="tab" aria-controls="piutang" aria-selected="false">Piutang</button>
+                  <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button" role="tab" aria-controls="import" aria-selected="false">Import</button>
+              </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <!-- Tab Invoices -->
+            <div class="tab-pane fade show active" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+              <div class="row g-3 mb-3 mt-4">
+                <div class="col-md-2">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="fas fa-city"></i></span>
+                    <select class="form-control" name="invoice_branch" id="invioce_branch">
+                      <option value="ALL">ALL</option>
+                      <option value="101">Kasablanka</option>
+                      <option value="50">Gandaria</option>
+                      <option value="350">Bekasi</option>
+                      <option value="52">Surabaya</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="far fa-calendar-alt"></i></span>
+                    <input type="text" class="form-control" name="daterange_invoices_filter" id="dateFilter" aria-describedby="inputGroupPrepend3 dateFilterFeedback">
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <button class="btn btn-primary btn-grad me-1" @click="setInvoicePrint"><i class="fas fa-print"></i> Print Selected</button>
+                  <button class="btn btn-primary btn-grad" @click="getInvoicesData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+              </div>
+              <!-- Table Print View -->
+              <div class="card-body p-0"> 
+                <h5 class="card-title mb-3" hidden>Invoices List</h5> 
+                <hr>              
+                <table class="table table-striped table-hover display nowrap" id="table-invoices" style="width:100%;">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="select-checkbox" id="table-invoices-selected-all"></th>
+                        <th scope="col">Nomor</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Pelanggan</th>
+                        <th scope="col">Nomor Pelanggan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aproval</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Cabang</th>
+                      </tr>
+                    </thead>
+                </table>
+              </div>
+            </div>
+            <!-- Tab Piutang -->
+            <div class="tab-pane fade" id="piutang" role="tabpanel" aria-labelledby="piutang-tab">
+              <div class="row g-3 mb-3 mt-4">
+                <div class="col-md-2">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="fas fa-city"></i></span>
+                    <select class="form-control" name="customer_branch" id="customer_branch">
+                      <option value="ALL">All</option>
+                      <option value="101">Kasablanka</option>
+                      <option value="350">Bekasi</option>
+                      <option value="50">Gandaria</option>
+                      <option value="52">Surabaya</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="fas fa-user"></i></span>
+                    <select class="form-control" name="customer" id="customer_selected"></select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-primary btn-grad me-1" @click="setInvoicePiutangPrint"><i class="fas fa-print"></i> Print Preview </button>
+                  <button class="btn btn-primary btn-grad" @click="getInvoicesData()" hidden><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+              </div>
+              <!-- Table Print View -->
+              <div class="card-body p-0"> 
+                <h5 class="card-title mb-3" hidden>Invoices List</h5> 
+                <hr>              
+                <table class="table table-striped table-hover display nowrap" id="table-Customerinvoices" style="width:100%;">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="select-checkbox" id="table-invoices-selected-all"></th>
+                        <th scope="col">Nomor</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Pelanggan</th>
+                        <th scope="col">Nomor Pelanggan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aproval</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Bayar</th>
+                        <th scope="col">Sisa</th>
+                        <th scope="col">Cabang</th>
+                      </tr>
+                    </thead>
+                </table>
+              </div>
+            </div>
+            <!-- Tab Invoices Import -->
+            <div class="tab-pane fade" id="import" role="tabpanel" aria-labelledby="import-tab">
+              <form class="row row-cols-lg-auto g-3 align-items-center mb-4 mt-4">
+                <div class="col-12">
+                  <input class="form-control" type="file" id="formFile" @change="FileInvoice" @click="(e) => e.target.value = null">
+                </div>     
+                <div class="col-12">
+                  <a class="btn btn-primary" @click="ProsessImport('https://zeus.accurate.id/accurate/api/sales-invoice/bulk-save.do', 'sales_invoice_save', invoices)"><i class="fas fa-file-import"></i> Import</a>
+                  <a class="btn btn-primary" style="margin-left: 10px;" href="./impor-invoice-envision.xlsx"><i class="fas fa-file-excel"></i> Download Template</a>
+                </div>
+              </form>
+              <hr>
+              <table id="TableInvoice" class="table table-striped display nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                      <th>Tanggal</th>
+                      <th>No Invoice</th>
+                      <th>No Pelanggan</th>
+                      <th>Nama Pelanggan</th>
+                      <th>Nama Jasa</th>
+                      <th>Nama Dept</th>
+                      <th>Qty</th>
+                      <th>Harga</th>
+                      <th>Diskon (%)</th>
+                      <th>Note Detail</th>
+                      <th>Delete Item</th>
+                      <th>Delete Invoice</th>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Pembayaran -->
+        <div id="pembayaran" v-bind:hidden="page != 'pembayaran' && !waitPage" :style="waitPage ? {opacity: 0} : {opacity: 1}">
+          <h5 class="mt-4"># Pembayaran</h5>
+          <nav class="mt-4">
+              <div class="nav nav-tabs" id="nav-tab-pembayaran" role="tablist">
+                  <button class="nav-link tab-pembayaran active" id="pembayaran-tab" data-bs-toggle="tab" data-bs-target="#pembayaran-view" type="button" role="tab" aria-controls="pembayaran" aria-selected="false">Pembayaran</button>
+                  <button class="nav-link tab-pembayaran" id="import-pembayaran-tab" data-bs-toggle="tab" data-bs-target="#import-pembayaran" type="button" role="tab" aria-controls="import-pembayaran" aria-selected="false">Import</button>
+              </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="pembayaran-view" role="tabpanel" aria-labelledby="pembayaran-tab">
+              <div class="row g-3 mb-3 mt-4">
+                <div class="col-md-2">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="fas fa-city"></i></span>
+                    <select class="form-control" name="pembayaran_branch" id="pembayaran_branch">
+                      <option value="ALL">ALL</option>
+                      <option value="101">Kasablanka</option>
+                      <option value="350">Bekasi</option>
+                      <option value="50">Gandaria</option>
+                      <option value="52">Surabaya</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend3"><i class="far fa-calendar-alt"></i></span>
+                    <input type="text" class="form-control" name="daterange_pembayaran_filter" id="dateFilter" aria-describedby="inputGroupPrepend3 dateFilterFeedback">
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <button class="btn btn-primary btn-grad me-1" @click="getPembayaranPrint()"><i class="fas fa-print"></i> Print Selected</button>
+                  <button class="btn btn-primary btn-grad me-1" @click="deletedPembayaran()"><i class="fas fa-trash-alt"></i> Deleted Selected</button>
+                  <button class="btn btn-primary btn-grad" @click="getPembayaranData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+              </div>
+              <!-- Table Print View -->
+              <div class="card-body p-0"> 
+                <h5 class="card-title mb-3" hidden>Pembayaran List</h5> 
+                <hr>              
+                <table class="table table-striped table-hover display nowrap" id="table-pembayaran-print" style="width:100%;">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="select-checkbox" id="table-pembayaran-print-selected-all"></th>
+                        <th scope="col">Nomor</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Pelanggan</th>
+                        <th scope="col">Nomor Pelanggan</th>
+                        <th scope="col">Aproval</th>
+                        <th scope="col">Payment</th>
+                        <th scope="col">Diskon</th>
+                        <th scope="col">Cabang</th>
+                        <th scope="col">Kode Bank</th>
+                        <th scope="col">Bank</th>
+                      </tr>
+                    </thead>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="import-pembayaran" role="tabpanel" aria-labelledby="import-pembayaran-tab">
+              <form class="row row-cols-lg-auto g-3 align-items-center mb-4 mt-4">
+                <div class="col-12">
+                  <input class="form-control" type="file" id="formFile" @change="FilePembayaran" @click="(e) => e.target.value = null">
+                </div>     
+                <div class="col-12">
+                  <a class="btn btn-primary" @click="ProsessImport('https://zeus.accurate.id/accurate/api/sales-receipt/bulk-save.do', 'sales_receipt_save', receipts)"><i class="fas fa-file-import"></i> Import</a>
+                  <a class="btn btn-primary" style="margin-left: 10px;" href="./impor-sales-receipt-envision.xlsx"><i class="fas fa-file-excel"></i> Download Template</a>
+                </div>
+              </form>
+              <hr>
+              <table id="TablePembayaran" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>No Invoice</th>
+                        <th>No Kontrak</th>
+                        <th>No Kwitansi</th>
+                        <th>Nama Pelanggan</th>
+                        <th>Nama Jasa</th>
+                        <th>Periode</th>
+                        <th>Piutang</th>
+                        <th>Debet</th>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Customer -->
+        <div id="pembayaran" v-bind:hidden="page != 'customer' && !waitPage" :style="waitPage ? {opacity: 0} : {opacity: 1}">
+          <h5 class="mt-4"># Customer</h5>
+          <form class="row row-cols-lg-auto g-3 align-items-center mb-4">
+            <div class="col-12">
+              <input class="form-control" type="file" id="formFile" @change="FileCustomer" @click="(e) => e.target.value = null">
+            </div>     
+            <div class="col-12">
+              <a class="btn btn-primary" @click="ProsessImportCustomer('https://zeus.accurate.id/accurate/api/customer/save.do', 'customer_save', customers)"><i class="fas fa-file-import"></i> Import</a>
+              <a class="btn btn-primary" style="margin-left: 10px;" href="./import-customer.xlsx"><i class="fas fa-file-excel"></i> Download Template</a>
+            </div>
+          </form>
+          <hr>
+          <table id="TableCustomer" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Nomor Customer</th>
+                    <th>Name Customer</th>
+                    <th>Update Customer</th>
+                    <th>Delete Customer</th>
+                </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="responseImport" tabindex="-1" aria-labelledby="responseImportLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="responseImportLabel">Result Process</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table id="TableResult" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Result</th>
+                        <th>Satus</th>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Printout -->
+      <div class="modal fade" id="printoutInvoiceModal" tabindex="-1" aria-labelledby="printoutInvoiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="printoutInvoiceModalLabel">Printout Invoice</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" v-if="printSettingInvoiceShow">
+              <div class="row g-3">
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Approved By</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSetting.name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-city"></i> Department</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSetting.department">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-city"></i> Minimal OS</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSetting.minimalTunggakan">
+                  </div>
+                  <!-- Input File -->
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-signature"></i> Signature</label>
+                    <input type="file" class="form-control" aria-label="file example" @change="FilePrintInvoice" @click="(e) => e.target.value = null">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> No Rek</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.norek" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Footer</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Gandaria</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.gandaria" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Bekasi</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.bekasi" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Kasablanka</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.kasablanka" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Surabaya</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.surabaya" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Option View</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <!-- Checkbox Option -->
+                  <div class="col-md-2">
+                      <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="validationFormCheck1" v-model="printSetting.isOutstanding">
+                          <label class="form-check-label" for="validationFormCheck1">Outstanding</label>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="validationFormCheck2" v-model="printSetting.isSignature">
+                        <label class="form-check-label" for="validationFormCheck2">Signature</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="validationFormCheck2" v-model="printSetting.isNorek">
+                        <label class="form-check-label" for="validationFormCheck2">No Rek</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="isNoKontrak" v-model="printSetting.isNoKontrak">
+                        <label class="form-check-label" for="isNoKontrak">No Kontrak</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <iframe id="printoutInvoiceIframe" src="print-invoice.html" frameborder="0" style="width:100%; height:82vh;" v-bind:style="{'display': printInvoiceShow}"></iframe>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" @click="printSettingInvoiceShow = true; printInvoiceShow = 'none'" v-if="printSettingInvoiceShow == false">Setting</button>
+              <button type="button" class="btn btn-primary" @click="printInvoiceSetting" v-if="printSettingInvoiceShow == true">Apply</button>
+              <div class="btn-group me-2" role="group" aria-label="Basic example" v-if="setInvoicePrintData.length > 1 && printSettingInvoiceShow == false">
+                <button type="button" class="btn btn-primary" @click="backPageInvoicePrint"><i class="fas fa-chevron-circle-left"></i></button>
+                <button type="button" class="btn btn-secondary" disabled>{{paginationInvoice.page}} / {{setInvoicePrintData.length}}</button>
+                <button type="button" class="btn btn-primary" @click="nextPageInvoicePrint" v-bind:disabled="setInvoicePrintData[paginationInvoice.page-1]['result'].length == 0"><i class="fas fa-chevron-circle-right"></i></button>
+              </div>
+              <button class="btn btn-primary" @click="getInvoicePrintRefresh(paginationInvoice.page)" v-if="dataInvoice.pageCount > 1"><i class="fas fa-sync-alt"></i> Refresh</button>
+              <button type="button" class="btn btn-primary" @click="printInvoice" v-if="printSettingInvoiceShow == false"><i class="fas fa-print"></i> Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Printout Piutang-->
+      <div class="modal fade" id="printoutInvoicePiutangModal" tabindex="-1" aria-labelledby="printoutInvoicePiutangModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="printoutInvoicePiutangModalLabel">Printout Invoice</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" v-bind:hidden="!printSettingInvoiceShow">
+              <div class="row g-3">
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Approved By</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="far fa-calendar-alt"></i> Tanggal Pembuatan</label>
+                    <input type="text" name="tanggal_terbit" class="form-control">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="far fa-calendar-alt"></i> Tanggal Berjalan</label>
+                    <input type="text" name="tanggal_tempo" class="form-control">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="far fa-calendar-alt"></i> Tanggal Pemutusan</label>
+                    <input type="text" name="tanggal_pemutusan" class="form-control">
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Approved By</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSetting.name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-city"></i> Department</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSetting.department">
+                  </div>
+                  <!-- Input File -->
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-signature"></i> Signature</label>
+                    <input type="file" class="form-control" aria-label="file example" @change="FilePrintInvoice" @click="(e) => e.target.value = null">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> No Rek</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.norek" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Footer</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Gandaria</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.gandaria" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Bekasi</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.bekasi" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Kasablanka</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.kasablanka" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Surabaya</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSetting.footer.surabaya" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Option View</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <!-- Checkbox Option -->
+                  <div class="col-md-2">
+                      <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="validationFormCheck1" v-model="printSetting.isOutstanding">
+                          <label class="form-check-label" for="validationFormCheck1">Outstanding</label>
+                      </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="validationFormCheck2" v-model="printSetting.isSignature">
+                        <label class="form-check-label" for="validationFormCheck2">Signature</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="validationFormCheck2" v-model="printSetting.isNorek">
+                        <label class="form-check-label" for="validationFormCheck2">No Rek</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <iframe id="printoutInvoicePiutangIframe" src="print-piutang.html" frameborder="0" style="width:100%; height:82vh;" v-bind:style="{'display': printInvoiceShow}"></iframe>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" @click="printSettingInvoiceShow = true; printInvoiceShow = 'none'" v-if="printSettingInvoiceShow == false">Setting</button>
+              <button type="button" class="btn btn-primary" @click="printInvoiceSettingPiutang" v-if="printSettingInvoiceShow == true">Apply</button>
+              <div class="btn-group me-2" role="group" aria-label="Basic example" v-if="setInvoicePrintData.length > 1 && printSettingInvoiceShow == false">
+                <button type="button" class="btn btn-primary" @click="backPageInvoicePrint"><i class="fas fa-chevron-circle-left"></i></button>
+                <button type="button" class="btn btn-secondary" disabled>{{paginationInvoice.page}} / {{setInvoicePrintData.length}}</button>
+                <button type="button" class="btn btn-primary" @click="nextPageInvoicePrint" v-bind:disabled="setInvoicePrintData[paginationInvoice.page-1]['result'].length == 0"><i class="fas fa-chevron-circle-right"></i></button>
+              </div>
+              <button class="btn btn-primary" @click="getInvoicePrintRefresh(paginationInvoice.page)" v-if="dataInvoice.pageCount > 1"><i class="fas fa-sync-alt"></i> Refresh</button>
+              <button type="button" class="btn btn-primary" @click="printInvoicePiutang" v-if="printSettingInvoiceShow == false"><i class="fas fa-print"></i> Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Printout -->
+      <div class="modal fade" id="printoutPembayaranModal" tabindex="-1" aria-labelledby="printoutPembayaranModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="printoutPembayaranModalLabel">Printout Pembayaran </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" v-if="printSettingPembayaranShow">
+              <div class="row g-3">
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Approved By</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-user"></i> Name</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSettingPembayaran.name">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-city"></i> Department</label>
+                    <input type="text" name="phone" class="form-control" v-model="printSettingPembayaran.department">
+                  </div>
+                  <!-- Input File -->
+                  <div class="col-md-4">
+                    <label class="form-label"><i class="fas fa-signature"></i> Signature</label>
+                    <input type="file" class="form-control" aria-label="file example" @change="FilePrintPembayaran" @click="(e) => e.target.value = null">
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Footer</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Gandaria</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSettingPembayaran.header.gandaria" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Bekasi</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSettingPembayaran.header.bekasi" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Kasablanka</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSettingPembayaran.header.kasablanka" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="validationTextarea" class="form-label"><i class="fas fa-file-alt"></i> Surabaya</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="" v-model="printSettingPembayaran.header.surabaya" ></textarea>
+                  </div>
+                  <div class="col-md-12">
+                    <label class="form-label"><i class="fas fa-file-alt"></i> Option View</label>
+                    <hr class="mt-1 mb-1">
+                  </div>
+                  <!-- Checkbox Option -->
+                  <div class="col-md-2">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="validationFormCheck2" v-model="printSettingPembayaran.isSignature">
+                        <label class="form-check-label" for="validationFormCheck2">Signature</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <iframe id="printoutPembayaranIframe" src="print-pembayaran.html" frameborder="0" style="width:100%; height:82vh;" v-bind:style="{'display': printPembayaranShow}"></iframe>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" @click="printSettingPembayaranShow = true; printPembayaranShow = 'none'" v-if="printSettingPembayaranShow == false">Setting</button>
+              <button type="button" class="btn btn-primary" @click="printPembayaranSetting" v-if="printSettingPembayaranShow == true">Apply</button>
+              <div class="btn-group me-2" role="group" aria-label="Basic example" v-if="dataPembayaran.pageCount > 1 && printSettingPembayaranShow == false">
+                <button type="button" class="btn btn-primary" @click="backPagePembayaran"><i class="fas fa-chevron-circle-left"></i></button>
+                <button type="button" class="btn btn-secondary" disabled>{{paginationPembayaran.page}} / {{dataPembayaran.pageCount}}</button>
+                <button type="button" class="btn btn-primary" @click="nextPagePembayaran"><i class="fas fa-chevron-circle-right"></i></button>
+              </div>
+              <button type="button" class="btn btn-primary" @click="printPembayaran" v-if="printSettingPembayaranShow == false"><i class="fas fa-print"></i> Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const App = createApp({
+        data() {
+            return {
+                email: '',
+                page: 'invoice',
+                waitPage: true,
+                welcome: 'Hello World!',
+                invoices: [],
+                invoicesData: [],
+                receipts: [],
+                customers: [],
+                resultProsess:[],
+                printOutInvoiceData: [],
+                printOutPembayaranData: [],
+                selectedInvoiceData: [],
+                selectedPembayaranData: [],
+                setInvoicePrintData: [],
+                setPembayaranPrintData: [],
+                date_invoice_filter: moment().format('DD/MM/YYYY'),
+                dateFillter:{
+                  startDate: '',
+                  endDate: ''
+                },
+                printSetting:{
+                  name: 'Hizkia',
+                  department: 'Finance',
+                  signature: '',
+                  isOutstanding: false,
+                  isSignature: false,
+                  norek: '',
+                  isNorek: false,
+                  isNoKontrak: false,
+                  minimalTunggakan:1000,
+                  footer: {
+                      "gandaria": "Informasi Pembayaran Dapat Menghubungi: PT Envision ( Pusat ), Alamat : Gandaria 8 Lt. 6 Unit H, Kawasan Gandaria City Mall\nKebayoran Lama Utara, Jakarta Selatan DKI Jakarta - 12240 NPWP : 21.137.860.9-013.000\n\nCabang : Gandaria\nHP Customer Service : 0812-3120-7732 ( Waterplace ) & 0811-3406-300 ( Supermall ) & 0821-2256-7885 ( Tunjungan Plaza )\nTelp : (031) 7393 400 / 7393 700\nEmail : nunung@envision.co.id; hizkia@envision.co.id; jannah@envision.co.id; dimas@envision.co.id; cs.envgc@envision.co.id; ",
+                      "bekasi": "Informasi Pembayaran Dapat Menghubungi: PT Envision ( Pusat ), Alamat : Gandaria 8 Lt. 6 Unit H, Kawasan Gandaria City Mall\nKebayoran Lama Utara, Jakarta Selatan DKI Jakarta - 12240 NPWP : 21.137.860.9-013.000\n\nCabang : Gandaria\nHP Customer Service : 0812-3120-7732 ( Waterplace ) & 0811-3406-300 ( Supermall ) & 0821-2256-7885 ( Tunjungan Plaza )\nTelp : (031) 7393 400 / 7393 700\nEmail : nunung@envision.co.id; hizkia@envision.co.id; jannah@envision.co.id; dimas@envision.co.id; cs.envgc@envision.co.id; ",
+                      "kasablanka": "Informasi Pembayaran Dapat Menghubungi: PT Envision ( Pusat ), Alamat : Gandaria 8 Lt. 6 Unit H, Kawasan Gandaria City Mall\nKebayoran Lama Utara, Jakarta Selatan DKI Jakarta - 12240 NPWP : 21.137.860.9-013.000\n\nCabang : Kota Kasablanka\nTelp : (021) 2946 5005 / 2946 5006 HP Customer Service : 0811-9565-005 ( Casagrande I ) & 0811-1052-6688 ( Casagrande II )\nEmail : nunung@envision.co.id; hizkia@envision.co.id; maja@envision.co.id; ferry@envision.co.id; andina@envision.co.id; cs.envkk1@envision.co.id; cs.envkk2@envision.co.id; ",
+                      "surabaya": "Informasi Pembayaran Dapat Menghubungi: PT Envision ( Pusat ), Alamat : Gandaria 8 Lt. 6 Unit H, Kawasan Gandaria City Mall\nKebayoran Lama Utara, Jakarta Selatan DKI Jakarta - 12240 NPWP : 21.137.860.9-013.000\n\nCabang : Surabaya\nHP Customer Service : 0812-3120-7732 ( Waterplace ) & 0811-3406-300 ( Supermall ) & 0821-2256-7885 ( Tunjungan Plaza )\nTelp : (031) 7393 400 / 7393 700\nEmail : nunung@envision.co.id; hizkia@envision.co.id; jeffri@envision.co.id; maryam@envision.co.id; bella@envision.co.id; rizal@envision.co.id; dwikha@envision.co.id; cs.envsby2@envision.co.id; cs.envsby1@envision.co.id; hafizh@envision.co.id; swandi@envision.co.id; "
+                  },
+                  tanggal_terbit: '',
+                  tanggal_tempo: '',
+                  tanggal_pemutusan: ''
+                },
+                printSettingPembayaran:{
+                  name: 'Hizkia',
+                  department: 'Finance',
+                  signature: 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABBAHEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiivBPG174g8Tftg/DfRtC1XULLRfC2h6hrfiazSaSO0vI7wG2sEZVO2SRZbe4cBx8oViOTQB7Zqmp2miabd6hf3EVnY2kLz3FxM4SOKNQWZ2Y8AAAkn2ryTwb+2J8HfHPm/2f46sbPy1Vs61DNpQkB3Y8s3aReZ9052Zx3xkVX/a6v0ufhDqPhuK/ex1HWYp5IjHOIiYrSJryYP8AOh8p1g8l+cYuAG4Y184/Aj9lTw58brPxDq2u65renXOm6mtiItHuoDBIFtoZAzGSF9zAytyCMegr38DgcLWwtTFYqo4qLS0V3r9xyVKsozUIq7Z9fj9oH4Xn/mo/hL/wd2v/AMcru45FlUMrBlIyCOQRXwlB+xP4G8KfFuDwt4h8SeKYYNeJk8NXsT2zi9ZIC93a3H+isiyJ5bSqTsV0kwoLxuT9z2VnFYWsNtbRJb28KCOOKNQqooGAoA4AAGMCuLHU8HBx+pzlJdbpL7rNm1Nzd+ZJHBfF/wCLTfDw6Houi6dB4h8d+JJ3t9C8PzXgtBd+UokuZGlKsEjiiy7HBydqj5nFb3gvx0PF32y3utH1Hw3rdlsN1o2reSbiFHz5cgaGSSN432th0dhlHU4ZGUefTeHP+Eu/a7GpaiIrmz8F+E7ebSo2Ubra81G4u4riQHGSTDZRpycAMcD5ia7L4jWEWmSaZ4xgh/4mWjTRxyzG6MEQ0+WWNbxpvmCukcRecBs4aFSO4Pmmp3VFFFABRRRQAUUUUANA9a5P4j+Lz4N8L6ndxSxWt5HY3NzDdXttNLZW5ijLmS4aMfKg64LKWwQvNdZ0r54/a/8AiX4N8H6L4f0Pxu+syaRq1ybqay0e3hk+2R20kTmCVpGG2NmaPcF5YBhkV04ShLE1o0oRcm3sld99PkROXLFswvhp+1F4n1648Br4qttH0KXXtPm1O5s1t3DxWcbTs188jXG23tvKSHazh2d/NGFUKxw/2LviRqfxj+Onx18cXwa307U4dBi0nT5LoTyWFnGl75cUgUlY5G3GZ41JCvOwyTmvNPip+138OvHMHiSHSNO8Tafc+I7Gx0W/k+yWnnLpqXDfa44C07hC9vPOownDlSSOo+i/2Z7XwpfePfjX4i8J/wBnvp13r+n2EM2mFfs5hg0WwZFUL8q7WnlBAxg5BAINejmOAr4RRnUoumnffa//AALpGdKaldKVyn+2BYQJ4S1XxFFGlxqWiaBd2CIrkTQjUp7a3LpgE5KRTgH1H5TfsN2Ui/A6PUpgWn1PUrm6eVs5kIYRE89gYyB9PXJrkf2vtZlgPi/S7e7s7OW5sPDm43JO6ZBfalKUQeoMAPfI3A9QR7L+zX4Yn8H/AAM8IaZcp5dwtoZ3XfvwZXaXAJ5I+fvz6812cypZHy9Z1PnZR/zZl8WI9F+bHftF2cSfCbV9faNPtfhMx+KLSR41ZlksXFwUUn7vmxxyQswIOyZxnk16fXzn8R/iPc/Fnw3pXw8ttG1vw74o8U3cJvtMnWMT2Whx3kYvLi4YFlhSaBZoI93LyOQgYKzD3DxfrN94e8M6nqWnaNceIL62haSDTLSREkuGHRQzkAe/U4BwGOFPzVnsdh5v8JLW/ufjt8dNUu5jJapqelaTZqf+WccWl29wyj233rn6sa3P2j0lf9nr4niGRopj4W1QI6EBlb7JLggnoc1V+Dl59v8AE3xWuWtJ7C4l8S27z2dyyGSFzomlnY2wsuQMZ2swznBNUfjVqI8Y67oHwvtLa5vJNamhv9blhwbez0qCdJJI7rnIW7EclsqlSJAZxkBGo6gevLkKNxyccmnUUUgCiiigAooooAQDFc34t+Hfhbx61qfE3hrR/EP2Tf8AZ/7VsIrryd2N2zzFO3O1c467R6Uz4ifEHw/8KPBmqeLPFWoppWg6aiyXN26s+3cwRQFUFmZmZVCgEksAOtef2njn4s/EKxeXw74FsfAdlKYjb3/ji9829CnaXc6fabhwCQFe6jbP3lA4Li3F3i7MCbx7+zN4A8Q+Ctb0zSfBnh/RtRubV1tr2w0y3glilAyhDqgIG4DI7jIPBrwX9gbxfZ+C9U8afDrVVttM1ibVmv4YUYkzTLAsVwm4DYdiW0ZyCc/OecAn6G8JfDXx/aajLceKvize6/ai7FzBZafotppyKgbIhkYCR3TgA4ZSeckg4r4k+NvgGb4f/Grxx8Qo7K613w1o3i2zsLqDUZft7REaXpVynmPcu7usjXEyDqEwACAVA+uyissfSqZXiJX59YNvaa2Wv8y0ZxVYcklVgtt/T/gF/wDac+LvhX4ofGHVZ/DPiDS/Eeh2Hh3TJbi7sZUlWGWO71ESx7x8yMY5BjaQctGc/dNJ8Qv2+NY8O67pXhiV/wDhXHheyi0mC6vbPbqWoLDcRQy+ZvePZ8ttcQttWNm3Z5Iyo9A+I9/4a+N/x08F61YXUcvh/wATaHYafdb9ySvAb27R4CF5BYtLHuDDaQxBNfK/wV/Y88SeIfF+mad4g0PVdZvLPxD4i8E67rdpK0i6WE0m1j0662vLGPLQSSSAjqsaIMsY1JWnDCYehSrwu0pOzWzbtqvKwornnJxfVHPeH/29/GUN5LY6Z4d0u018uLl9Ql1C71B3aNt0RvJbqaVroRLuKLuCRl2ZFDY2e/fBH9qz4m/Eq68I+L/iG+tJ4N8NL5Wp3XhSzlji1G+YYt1uBE4DmRzD8gAjzIq7QHJr6C/Zq/4J9/D34G6V4f1LVtPt/Efjyw2TT6yWmWA3Cs5R0gZyuVV1UEjrGrgK1WtW8a3ll+0jqXgbwR8MhrWq6dEPEM19ruvJpGnW8tzGsbXFvCsMsk4ba6PMI2KSF1G3zGJ8uGMw8KfKqd5NNXdtL9vO3X8Ddwk3e+h4p8Gfjp4y+I+jfF7xRoHhnUJ/E2ta7a2y3p1MwaNpxeC1t7cLEk3nNcFfLUukZViF3SKoOO/+NWnan8PtMtdIi1nX9T+J3jS4j0zR9Rubx7ae6k+RJrm7azaOJIoVuGWGBVKRsWl2MzyOPI9G8LeOPgR8dfH2mN478NfC77ZYWHiq08L+HtNn1eynj/0m2ZPMnVWj8v7OXdljYKrBlUCPaPuXQ/hv4a1DXfD/AI41KO51jxZp9m1jbazqcirOqsWDDy4dsG473XcicgnBIOTE6tONZV1C0Ltpemy9L7js2uW+p5r4b1XxJb/EjxL4j1DVru+8L+GY7fw5plvZkqNe1OYQRytMDkZScpCrH5EJclhiUn6N9KwIfBWjQ64NXFj5l+kjTQyTyPKts7KVdoUYlYS4ZtxjCltx3Zya3x715dSfPK6RolYdRRRWZQUUUUAcN8Xfhpb/ABW8IPpRu/7K1W1uItS0jWFt0nfTb+Ft9vcrG/yvtYcqeGUspIDGuYg+OF/4KntbD4p+HJPCdzcXUFla65pbSajot5LKYkUCdYxJbEyShMXMcS5B2u4BYewVHJGsiMjqHRhgqwyCPSgB56V886F4b0z4na9+0t4IvSubvxBab2khEghMugaWIZVB4LI8O8dwUB44ruh8BfDmiWsieDZb/wCHkxJeL/hGLj7PaROUVN/2Fg1ox2oo+aE9M8Hmsz4EfA7V/hPfeMtb8SeNrrx94o8U3lvdX2pz6dDYIFgt0giRYYflGFTkjrxxkEtUJunJTi7Nar1QmrqzPzg8Czax8Ev2ivB+geKAbeXT/ElhZT20sweGAS3MY3gngJ++EgPckN1r9HdJ8FeKvAGuazqPh3RtB1C88Q3C6hq0s8hs2muQiQgmVFbgRxocCI5Jck5Pzcb+1l+yRpnx18OeJNV0lBZ+PG0b7Ppl6rFCLmGZLi3IbcFRiY2iMmMhZOvygV7L8K/FGr+Nfh3oGt69oN14W1q9tVkvNHuxiS2l5DKR1AJGRnnBGcHNfTZ3nP8Aa9WnWcEmopNW0vre3q2YUaXsk13OTW2+MV5qkMl1deHNO0wxT+fBp2+W4EmZhEI2lTaw2tCxZtvzpjZtLbsXxz8J/F/j7VraS8m0iK5tZS+k+ITEG1Dw/IbOLdNasioXVrmMh4mYLIkhDfIvlt7pR+NfOOpfol8jbl8z80v2mPiB4q8D/HDwTe/EttKh1rwxbKLa4spZWtNcjmkdI7yGJoJo7OWJ8O6yK3zQDaXHl19YeIl1fX/B0dlajTru+13S9RsbS+1e9eCSzjMrr58dxFbSLl1kgbaTH/qkwX5K9p8d/gZ4d/aA8BXXhvX4VQsQ9pfpEjzWkgIO6MsDjcBtbGCVYjIOCM74VfAHT/A3wu8I+E/E14njm88OCT7Pq9/bbHLNKXVghd9rKNqA7icL1+Yiu+eJpVKNOMlZx0/P9WY8klJtdTjA13qv2fVP+Ew07VdI0PVLjV726gvna4htRd7h8himICfZrq3ZI3UERuQ3LIrLK50jwte+Hrz/AISzQ9RkitLhVu7nVp18uU29o5PnkSYSSWymL7yNwlZsOwZW9ttvAHhqw0htNttA06205lKNaQ2yJGVIIZSoGMEEgjoQSDwTVHSvhL4I0ayltLDwfodnazSwzSQxadCqvJC2+F2G3lkb5lJ5U8jBrn9pT13/AA/EHGp0seaeEBoHidNEv/8AhYVpe3bXNy0EcGqTzCXfLcmGLLyqZPKZhjep5gGANq7fe+tc2/w88LSakNRfw1pD6gF2i7awiMoG3Zjdtzjb8vXpx0rpBXNUknsXTjKK94dRRRWZqFFFFMAooopdQE/iNLRRTAKKKKACiiikAUUUUAIaWiimAUUUUAf/2QAA',
+                  isSignature: false,
+                  header: {
+                      "gandaria": "Gandaria 8 Office Tower Lantai 15 Unit G Kebayoran Lama Jakarta Selatan 12240\nTelp: (021) 2905 2905 / (021) 2930 4112 Fax : (021) 2905 2906",
+                      "bekasi": "Gandaria 8 Office Tower Lantai 15 Unit G Kebayoran Lama Jakarta Selatan 12240\nTelp: (021) 2905 2905 / (021) 2930 4112 Fax : (021) 2905 2906",
+                      "kasablanka": "Office Prudential Centre Lt. 5th Unit H Kawasan Kota Kasablanka Mall Menteng Dalam, Tebet, Jakarta Selatan 12870 - Indonesia\nTelp : (021) 2946 5005 | 06 Fax : (021) 2982 0225",
+                      "surabaya": "PLD (Tower D) Waterplace Residence Jl. Pakuwon Indah Timur - No. 3-5 Kel. Babatan, Kec. Wiyung, Surabaya, Jawa Timur\nTelp : (031) 7393 400 | 700"
+                  }
+                },
+                paginationInvoice: {
+                    page: 1,
+                    pageSize: 3
+                },
+                paginationPembayaran: {
+                    page: 1,
+                    pageSize: 30
+                },
+                runGetInvoicePrint2: null,
+                printSettingPembayaranShow: false,
+                printPembayaranShow: 'block',
+                printSettingInvoiceShow: false,
+                printInvoiceShow: 'block',
+                selectedPiutangData: null
+            }
+        },
+        created() {
+            let self = this;
+            // console.log('wait');
+            let cekAuth = setInterval(() => {
+              // console.log('cek auth');
+              if(localStorage.authUser){
+                // console.log(localStorage.authUser);
+                self.email = JSON.parse(localStorage.authUser).email.replace('}', '');
+                self.waitPage = false;
+                self.page = 'invoice';
+                clearInterval(cekAuth);
+              }
+            }, 500);
+
+            route.send('get-setting-print-invoice', '').then((r) => {
+                // console.log(r)
+                let data = _.first(JSON.parse(r));
+                if(data){
+                  self.printSetting = data;
+                }
+            });
+
+            route.send('get-setting-print-pembayaran', '').then((r) => {
+                // console.log(r)
+                let data = _.first(JSON.parse(r));
+                if(data){
+                  self.printSettingPembayaran = data;
+                }
+            });
+        },
+        updated() {
+            let self = this;
+        },
+        watch: {
+            'step': function (newVal) {
+                this.updateDom();
+            }
+        },
+        computed: {
+            publishedBooksMessage() {
+                return 'Hello'
+            },
+            dataInvoice(){
+                let pageSize = this.paginationInvoice.pageSize,
+                    to = this.paginationInvoice.page * pageSize,
+                    go = to - pageSize,
+                    data = _.slice(this.setInvoicePrintData, go, to),
+                    count = this.setInvoicePrintData.length / pageSize;
+               
+                return {
+                    page: this.paginationInvoice.page,
+                    pageCount: Math.round(count),
+                    data: data
+                }
+            },
+            dataPembayaran(){
+                let pageSize = this.paginationPembayaran.pageSize,
+                    to = this.paginationPembayaran.page * pageSize,
+                    go = to - pageSize,
+                    data = _.slice(this.selectedPembayaranData, go, to),
+                    count = this.selectedPembayaranData.length / pageSize;
+               
+                return {
+                    page: this.paginationPembayaran.page,
+                    pageCount: Math.round(count),
+                    data: data
+                }
+            }
+        },
+        methods: {
+            ProsessImport(url, scope, importData){
+              let go = [];
+                  chunk = 100;
+                  progress = 1,
+                  status = '',
+                  authUser = JSON.parse(localStorage.authUser),
+                  data = _.filter(JSON.parse(JSON.stringify(importData)), function(o){return o.chequeDate != 'Invalid date' && o.transDate  != 'Invalid date'}),
+                  self = this;
+
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, import it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    icon:'info',
+                    imageUrl: 'three-dots.svg',
+                    text: 'Please wait processing get data!',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                  });
+                  for (let i = 0; i < data.length; i += chunk) {
+                    let dataImport = data.slice(i, i + chunk);
+                    
+                    let dataImportUpdate = {"data": _.filter(dataImport, (v) => v._status != 'delete')};
+                    // console.log(dataImportUpdate);
+                    if(dataImportUpdate.data.length > 0){
+                      let executeImport = new Promise((resolve, reject) => {
+                        const importProcess = () => axios.request({
+                          method: 'POST',
+                          url: url,
+                          params: {scope: scope},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: dataImportUpdate
+                        }).then(function (response) {
+                          status = '('+ Math.ceil(progress++ * 100 / go.length) +'%)';
+                          // console.log(status);
+                          $('#progress').text(status)
+                          resolve(response.data);
+                        }).catch(function (error) {
+                          // console.error(error);
+                          importProcess();
+                        });
+
+                        importProcess();
+                      });
+                      go.push(executeImport);
+                    }
+
+                    let dataImportDelete = {"data": _.filter(dataImport, (v) => v._status == 'delete')};
+                    // console.log(dataImportDelete)
+                    if(dataImportDelete.data.length > 0){
+                      dataImportDelete.data.map((v) => {
+                        if(v.id != undefined){
+                          let executeDelete = new Promise((resolve, reject) => {
+                            const importDelete = () => axios.request({
+                              method: 'POST',
+                              url: 'https://zeus.accurate.id/accurate/api/sales-invoice/delete.do',
+                              params: {scope: 'sales_invoice_save'},
+                              headers: {
+                                Authorization: 'Bearer '+ authUser.token,
+                                'X-Session-ID': authUser.session,
+                                'Content-Type': 'application/json'
+                              },
+                              data: {id: v.id }
+                            }).then(function (response) {
+                              status = '('+ Math.ceil(progress++ * 100 / go.length) +'%)';
+                              // console.log(status);
+                              $('#progress').text(status)
+                              resolve(response.data);
+                            }).catch(function (error) {
+                              // console.error(error);
+                              importDelete();
+                            });
+
+                            let goReceipt = [];
+                            // console.log(v.receipt);
+                            if(v.receipt.length != 0) {
+                              v.receipt.map((receipt) => {
+                                let executeDeleteReceipt = new Promise((resolveReceipt, rejectReceipt) => {
+                                  const importDeleteReceipt = () => axios.request({
+                                    method: 'POST',
+                                    url: 'https://zeus.accurate.id/accurate/api/sales-receipt/delete.do',
+                                    params: {scope: 'sales_receipt_delete'},
+                                    headers: {
+                                      Authorization: 'Bearer '+ authUser.token,
+                                      'X-Session-ID': authUser.session,
+                                      'Content-Type': 'application/json'
+                                    },
+                                    data: {id: receipt.id }
+                                  }).then(function (responseReceipt) {
+                                    // console.log(responseReceipt)
+                                    resolveReceipt(responseReceipt.data);
+                                  }).catch(function (errorReceipt) {
+                                    // console.error(errorReceipt);
+                                    importDeleteReceipt();
+                                  });
+
+                                  importDeleteReceipt();
+                                });
+                                goReceipt.push(executeDeleteReceipt);
+                              })
+                              // console.log(goReceipt);
+                              Promise.all(goReceipt).then((resultReceipt) => {
+                                // console.log(resultReceipt)
+                                importDelete();
+                              })
+                            }else{
+                              importDelete();
+                            }
+
+                          });
+                          go.push(executeDelete);
+                        }
+                      })
+                    }
+                  }
+                  // console.log(go);
+                  Promise.all(go).then((result) => {
+                    status = 'Import accurate online Finish';
+                    if(result.length == 0){
+                      Swal.fire(
+                        'Import!',
+                        'Your Import Invoice has been Empty.',
+                        'warning'
+                        )
+                      }else{
+                        let responseImportModal = new bootstrap.Modal(document.getElementById('responseImport'));
+                        let c = [];
+                        _.map(result, (o) => { let x = _.find(o.d, 'd'); x ? c = [...c, ...o.d] : c.push(o) });
+                        self.resultProsess = _.sortedUniq(_.map(c, (o) => {let result = o.d ? _.isArray(o.d) ? _.join(o.d, '. ') : o.d : o; return {d: result, s:o.s == undefined ? false : o.s}}));
+                        // console.log(self.resultProsess)
+                        TableResult.clear().rows.add(self.resultProsess).draw();
+                        Swal.close()
+                        responseImportModal.show();
+                    }
+                    // console.log(status);
+                    // console.log(result);
+                  });
+                }
+              })
+            },
+            ProsessImportCustomer(url, scope, importData){
+              let go = [];
+                  chunk = 100;
+                  progress = 1,
+                  status = '',
+                  authUser = JSON.parse(localStorage.authUser),
+                  data = JSON.parse(JSON.stringify(importData)),
+                  self = this;
+
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, import it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    icon:'info',
+                    imageUrl: 'three-dots.svg',
+                    text: 'Please wait processing get data!',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                  });
+
+                  let dataImportUpdate = _.filter(data, (v) => v._status != 'delete');
+                  // console.log(dataImportUpdate);
+                  if(dataImportUpdate.length > 0){
+                    dataImportUpdate.map((dataImportUpdateCustomer) => {
+                      let executeImport = new Promise((resolve, reject) => {
+                        const importProcess = () => axios.request({
+                          method: 'POST',
+                          url: url,
+                          params: {scope: scope},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: dataImportUpdateCustomer
+                        }).then(function (response) {
+                          status = '('+ Math.ceil(progress++ * 100 / go.length) +'%)';
+                          // console.log(status);
+                          $('#progress').text(status)
+                          resolve(response.data);
+                        }).catch(function (error) {
+                          // console.error(error);
+                          importProcess();
+                        });
+
+                        importProcess();
+                      });
+                      go.push(executeImport);
+                    })
+                  }
+
+                  let dataImportDelete = _.filter(data, (v) => v._status == 'delete');
+                  // console.log(dataImportDelete)
+                  if(dataImportDelete.length > 0){
+                    // console.log(dataImportDelete);
+                    dataImportDelete.map((v) => {
+                      if(v.id != undefined){
+                        let executeDeleteCustomer = new Promise((resolve, reject) => {
+
+                          const importDeleteCustomer = () => axios.request({
+                            method: 'POST',
+                            url: 'https://zeus.accurate.id/accurate/api/customer/delete.do',
+                            params: {scope: 'customer_delete'},
+                            headers: {
+                              Authorization: 'Bearer '+ authUser.token,
+                              'X-Session-ID': authUser.session,
+                              'Content-Type': 'application/json'
+                            },
+                            data: {id: v.id }
+                          }).then(function (response) {
+                            status = '('+ Math.ceil(progress++ * 100 / go.length) +'%)';
+                            // console.log(status);
+                            $('#progress').text(status)
+                            resolve(response.data);
+                          }).catch(function (error) {
+                            // console.error(error);
+                            importDeleteCustomer();
+                          });
+
+                          let goInvoice = [];
+                          if(v.invoiceData != undefined) {
+                            v.invoiceData.map((v) => {
+                              let executeDeleteInvoice = new Promise((resolveInvoice, rejectInvoice) => {
+                                const importDeleteInvoice = () => axios.request({
+                                  method: 'POST',
+                                  url: 'https://zeus.accurate.id/accurate/api/sales-invoice/delete.do',
+                                  params: {scope: 'sales_invoice_save'},
+                                  headers: {
+                                    Authorization: 'Bearer '+ authUser.token,
+                                    'X-Session-ID': authUser.session,
+                                    'Content-Type': 'application/json'
+                                  },
+                                  data: {id: v.id }
+                                }).then(function (response) {
+                                  status = '('+ Math.ceil(progress++ * 100 / go.length) +'%)';
+                                  // console.log(status);
+                                  $('#progress').text(status)
+                                  resolveInvoice(response.data);
+                                }).catch(function (error) {
+                                  // console.error(error);
+                                  importDeleteInvoice();
+                                });
+                                
+                                let goReceipt = [];
+                                // console.log(v.receipt);
+                                if(v.receipt.length != 0) {
+                                  v.receipt.map((receipt) => {
+                                    let executeDeleteReceipt = new Promise((resolveReceipt, rejectReceipt) => {
+                                      const importDeleteReceipt = () => axios.request({
+                                        method: 'POST',
+                                        url: 'https://zeus.accurate.id/accurate/api/sales-receipt/delete.do',
+                                        params: {scope: 'sales_receipt_delete'},
+                                        headers: {
+                                          Authorization: 'Bearer '+ authUser.token,
+                                          'X-Session-ID': authUser.session,
+                                          'Content-Type': 'application/json'
+                                        },
+                                        data: {id: receipt.id }
+                                      }).then(function (responseReceipt) {
+                                        // console.log(responseReceipt)
+                                        resolveReceipt(responseReceipt.data);
+                                      }).catch(function (errorReceipt) {
+                                        // console.error(errorReceipt);
+                                        importDeleteReceipt();
+                                      });
+
+                                      importDeleteReceipt();
+                                    });
+                                    goReceipt.push(executeDeleteReceipt);
+                                  })
+                                  // console.log(goReceipt);
+                                  Promise.all(goReceipt).then((resultReceipt) => {
+                                    // console.log(resultReceipt)
+                                    importDeleteInvoice();
+                                  })
+                                }else{
+                                  importDeleteInvoice();
+                                }
+                              })
+                              goInvoice.push(executeDeleteInvoice);
+                            })
+
+                            Promise.all(goInvoice).then((resultExecuteDeleteInvoice) => {
+                              // console.log(resultExecuteDeleteInvoice);
+                              importDeleteCustomer();
+                            });
+                          }else{
+                            importDeleteCustomer();
+                          }
+                        });
+                        go.push(executeDeleteCustomer);
+                      }
+                    })
+                  }
+                  
+                  // console.log(go);
+                  Promise.all(go).then((result) => {
+                    status = 'Import accurate online Finish';
+                    if(result.length == 0){
+                      Swal.fire(
+                        'Import!',
+                        'Your Import Invoice has been Empty.',
+                        'warning'
+                        )
+                      }else{
+                        let responseImportModal = new bootstrap.Modal(document.getElementById('responseImport'));
+                        let c = [];
+                        _.map(result, (o) => { let x = _.find(o.d, 'd'); x ? c = [...c, ...o.d] : c.push(o) });
+                        self.resultProsess = _.sortedUniq(_.map(c, (o) => {let result = o.d ? _.isArray(o.d) ? _.join(o.d, '. ') : o.d : o; return {d: result, s:o.s == undefined ? false : o.s}}));
+                        // console.log(self.resultProsess)
+                        TableResult.clear().rows.add(self.resultProsess).draw();
+                        Swal.close()
+                        responseImportModal.show();
+                    }
+                    // console.log(status);
+                    // console.log(result);
+                  });
+                }
+              })
+            },
+            FilePembayaran(e){
+              let self = this;
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onload = function(e) {
+                let data     = e.target.result,
+                    workbook = XLSX.read(e.target.result, {
+                    cellDates: true
+                });
+
+                let Sheet1 = _.filter(XLSX.utils.sheet_to_json(workbook.Sheets['Sheet1']), function(o){return o['NO. KONTRAK'] != undefined});
+                
+                // console.log(Sheet1);
+                
+                self.receipts = _.filter(_.map(_.groupBy(Sheet1, 'NO. KWITANSI'), (o) => {
+                  return {
+                    "bankNo" : o[0]['BANK'],
+                    "chequeAmount" : o[0]['DEBET'],
+                    "chequeDate" : moment(o[0]['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY'),
+                    "customerNo" : o[0]['NO. KONTRAK'],
+                    "transDate" : moment(o[0]['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY'),
+                    "branchName": o[0]['KOP SURAT'],
+                    "chequeNo" : o[0]['NO. KWITANSI'],
+                    "description" : o[0][''],
+                    "number" : o[0]['NO. KWITANSI'],
+                    "useCredit" : o[0]['KREDIT'] == undefined ? true : o[0]['KREDIT'],
+                    "charField1" : o[0]['NO. VIRTUAL ACCOUNT'],
+                    "charField2" : o[0]['PAKET BERLANGGANAN'],
+                    "charField3" : o[0]['PERIODE'],
+                    "paymentMethod" : o[0]['PAYMENT METHOD'],
+                    "detailInvoice" : _.map(o, (p) => {
+                      let item = {
+                            "invoiceNo" : p['NO. INVOICE'],
+                            "paymentAmount" : p['PIUTANG']
+                          },
+                          diskon = {"detailDiscount" : _.filter([
+                              {
+                                  "accountNo" : p['AKUN PPH 23'],
+                                  "amount" : p['POTONG PPH 23'],
+                                  "discountNotes" : ''
+                              },
+                              {
+                                  "accountNo" : p['AKUN PPH 4'],
+                                  "amount" : p['POTONG PPH 4'],
+                                  "discountNotes" : ''
+                              },
+                              {
+                                  "accountNo" : p['AKUN BIAYA ADMIN'],
+                                  "amount" : p['BIAYA ADMIN'],
+                                  "discountNotes" : ''
+                              }
+                          ], (o) => {return o.accountNo != undefined})},
+                        cekDiskon = diskon.detailDiscount.length > 0 ? diskon : '';
+                      return {...item, ...cekDiskon};
+                    })
+                  }
+                }), function(o){return o.chequeDate != 'Invalid date' && o.transDate  != 'Invalid date'});
+
+                // console.log(self.receipts);
+
+                if(_.find(self.receipts, 'chequeAmount')){
+                  TablePembayaran.clear().rows.add(Sheet1).draw();
+                }else{
+                  self.receipts = [];
+                  TablePembayaran.clear().draw();
+                  Swal.fire(
+                    'Import!',
+                    'Your Import Invoice Receipts has been Empty.',
+                    'warning'
+                  )
+                }
+
+              };
+              reader.readAsArrayBuffer(file);
+            },
+            FilePrintInvoice(e){
+              let self = this;
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onload = function(e) {
+                let data = e.target.result;
+                // console.log(data);
+                self.printSetting.signature = data;
+              };
+              reader.readAsDataURL(file);
+            },
+            FilePrintPembayaran(e){
+              let self = this;
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onload = function(e) {
+                let data = e.target.result;
+                // console.log(data);
+                self.printSettingPembayaran.signature = data;
+              };
+              reader.readAsDataURL(file);
+            },
+            FileInvoice(e){
+              let self = this;
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onload = function(e) {
+                let data = e.target.result;
+                /* reader.readAsArrayBuffer(file) -> data will be an ArrayBuffer */
+                let workbook = XLSX.read(e.target.result,{
+                  cellDates:true
+                });
+
+                let Sheet1 = _.filter(XLSX.utils.sheet_to_json(workbook.Sheets['Sheet1']), function(o){return o['NO. REFERENSI'] != undefined});
+                
+                // console.log(Sheet1);
+
+                let customer = _.keys(_.groupBy(Sheet1, 'ID JOB DETAIL'));
+
+                // console.log(customer);
+
+                self.invoices = _.filter(_.map(_.groupBy(Sheet1, 'NO. REFERENSI'), (o) => {
+                    // console.log((n = _.find(o, "DELETE INVOICE")) ? n['DELETE INVOICE'] == true ? 'delete' : '' : '');
+                    return {
+                      "number" : o[0]['NO. REFERENSI'],
+                      "orderDownPaymentNumber" : o[0]['NO. REFERENSI'],
+                      "transDate" : moment(o[0]['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY'),
+                      "description" : o[0]['NAMA DEPT'],
+                      "toAddress" : "",
+                      "shipDate" : moment(o[0]['TGL JATUH TEMPO'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY'),
+                      "taxDate" : moment(o[0]['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY'),
+                      "currencyCode" : "IDR",
+                      "reverseInvoice" : "",
+                      "taxNumber" : o[0]['TAX SERIAL NUMBER'],
+                      "customerNo" : o[0]['ID JOB DETAIL'],
+                      "branchName": o[0]['KOP SURAT'],
+                      "vaNumber": o[0]['NO VA'],
+                      "subComp": o[0]['SUB KODE PERUSAHAAN'],
+                      "_status": (n = _.find(o, "DELETE INVOICE")) ? n['DELETE INVOICE'] == true ? 'delete' : '' : '',
+                      "detailItem" : _.map(o, (p) => {
+                        return {
+                          "quantity" : p['QTY'],
+                          "itemNo" : p['KODE JASA'],
+                          "detailName" : p['KETERANGAN JASA'],
+                          "unitPrice" : p['HARGA'],
+                          "itemDiscPercent" : p['DISKON (%)'],
+                          "detailNotes" : p['NOTE DETAIL'],
+                          "departmentName" : "",
+                          "_status": p['DELETE ITEM'] == true ? 'delete' : '',
+                        }
+                      })
+                    }
+                }), function(o){return o.chequeDate != 'Invalid date' && o.transDate  != 'Invalid date'});
+
+                // console.log(self.invoices);
+
+                self.getCustomerInvoice(self.invoices);
+
+                if(_.find(self.invoices, 'orderDownPaymentNumber')){
+                  TableInvoice.clear().rows.add(Sheet1).draw();
+                }else{
+                  self.invoices = [];
+                  TableInvoice.clear().draw();
+                  Swal.fire(
+                    'Import!',
+                    'Your Import Invoice has been Empty.',
+                    'warning'
+                  )
+                }
+              };
+              reader.readAsArrayBuffer(file);
+            },
+            FileCustomer(e){
+              let self = this;
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              reader.onload = function(e) {
+                let data     = e.target.result,
+                    workbook = XLSX.read(e.target.result, {
+                    cellDates: true
+                });
+
+                let Sheet1 = XLSX.utils.sheet_to_json(workbook.Sheets['Sheet1']);
+                
+                // console.log(Sheet1);
+
+                self.customers = _.map(Sheet1, (o) => {
+                  let n = {};
+                  n['customerNo'] = o['NOMOR CUSTOMER'];
+                  n['updateNo'] = o['UPDATE CUSTOMER'] != undefined ? o['UPDATE CUSTOMER'] : false;
+                  n['_status'] = o['DELETE CUSTOMER'] != undefined ? 'delete' : '';
+                  if(o['NAME CUSTOMER'] != undefined) {
+                    n['name'] = o['NAME CUSTOMER'];
+                  }
+                  return n;
+                });
+                                
+                // console.log(self.customers);
+                
+                if(_.find(self.customers, 'customerNo')){
+                  self.getCustomer(self.customers);
+                  TableCustomer.clear().rows.add(Sheet1).draw();
+                }else{
+                  self.receipts = [];
+                  TableCustomer.clear().draw();
+                  Swal.fire(
+                    'Import!',
+                    'Your Import Customer has been Empty.',
+                    'warning'
+                  )
+                }
+
+              };
+              reader.readAsArrayBuffer(file);
+            },
+            setPage(page){
+              // console.log(page);
+              this.page = page;
+            },
+            getCustomerInvoice(invoice){
+              Swal.fire({
+                icon:'info',
+                imageUrl: 'three-dots.svg',
+                text: 'Please wait processing Get File!',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                footer: '<span id="progress">(0%)</span>'
+              })
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  status = '',
+                  progress = 1,
+                  execute = invoice.map((v) => {
+                    return new Promise((resolve, reject) => {
+                      const getInvoice = () => axios.request({
+                        method: 'GET',
+                        url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail-invoice.do',
+                        params: {scope: 'sales-invoice_view', customerNo: v.customerNo},
+                        headers: {
+                          Authorization: 'Bearer '+ authUser.token,
+                          'X-Session-ID': authUser.session,
+                          'Content-Type': 'application/json'
+                        }
+                      }).then(function (response) {
+                        let number = _.find(response.data.d, {number: v.number}); 
+                        if(number){
+                          v['id'] = number.id ;
+                          const getItem = () => axios.request({
+                            method: 'GET',
+                            url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                            params: {scope: 'sales-invoice_view', id: number.id},
+                            headers: {
+                              Authorization: 'Bearer '+ authUser.token,
+                              'X-Session-ID': authUser.session,
+                              'Content-Type': 'application/json'
+                            }
+                          }).then(function (response) {
+                            v['receipt'] = response.data.d.receiptHistory;
+                            v.detailItem.map((o) => {
+                              let item = _.find(response.data.d.detailItem, {detailName: o.detailName.replace(/^\ ?|\ ?$/g, "") , detailNotes: o.detailNotes.replace(/^\ ?|\ ?$/g, "") }); 
+                              // console.log('item');
+                              // console.log(response.data);
+                              // console.log(item);
+                              // console.log({detailName: o.detailName.replace(/^\ ?|\ ?$/g, "") , detailNotes: o.detailNotes.replace(/^\ ?|\ ?$/g, "") });
+                              if(item){
+                                o['id'] = item.id;
+                              }
+                              return o
+                            })
+                            status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                            // console.log(status);
+                            $('#progress').text(status)
+                            resolve(v);
+                          }).catch(function (error) {
+                            // console.error(error);
+                            getItem();
+                          });
+                          getItem();
+                        }else{
+                          status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                          // console.log(status);
+                          $('#progress').text(status)
+                          resolve(v);
+                        }
+                      }).catch(function (error) {
+                        // console.error(error);
+                        getInvoice();
+                      });
+                      getInvoice();
+                    });
+                  });  
+                  
+              // console.log(invoice);
+
+              Promise.all(execute).then((result) => {
+                // console.log(result);
+                Swal.close();
+              });
+            },
+            getCustomer(customer){
+              Swal.fire({
+                icon:'info',
+                imageUrl: 'three-dots.svg',
+                text: 'Please wait processing Get File!',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                footer: '<span id="progress">(0%)</span>'
+              })
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  status = '',
+                  progress = 1,
+                  execute = customer.map((v) => {
+                    return new Promise((resolve, reject) => {
+                      const getCustomer = () => axios.request({
+                        method: 'GET',
+                        url: 'https://zeus.accurate.id/accurate/api/customer/list.do',
+                        params: {'scope': 'customer_view', 'filter.no.val': v.updateNo ? v.updateNo : v.customerNo},
+                        headers: {
+                          Authorization: 'Bearer '+ authUser.token,
+                          'X-Session-ID': authUser.session,
+                          'Content-Type': 'application/json'
+                        }
+                      }).then(function (response) {
+                        let data = response.data; 
+                        // console.log(data);
+                        if(data.s){
+                          // console.log('ada')
+                          if(data.d.length > 0){
+                            v['id'] = data.d[0].id ;
+                            if(v._status == 'delete'){
+                              // Get Invoice
+                              const getInvoice = () => axios.request({
+                                method: 'GET',
+                                url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail-invoice.do',
+                                params: {scope: 'sales-invoice_view', customerNo: v.customerNo},
+                                headers: {
+                                  Authorization: 'Bearer '+ authUser.token,
+                                  'X-Session-ID': authUser.session,
+                                  'Content-Type': 'application/json'
+                                }
+                              }).then(function (responseInvoice) {
+                                if(responseInvoice.data.d.length > 0){
+                                  execute2 = responseInvoice.data.d.map((invoiceData) => {
+                                    return new Promise((resolve2, reject2) => {
+                                      const getItem = () => axios.request({
+                                        method: 'GET',
+                                        url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                                        params: {scope: 'sales-invoice_view', id: invoiceData.id},
+                                        headers: {
+                                          Authorization: 'Bearer '+ authUser.token,
+                                          'X-Session-ID': authUser.session,
+                                          'Content-Type': 'application/json'
+                                        }
+                                      }).then(function (responseReceipt) {
+                                        invoiceData['receipt'] = responseReceipt.data.d.receiptHistory;
+                                        resolve2({id: invoiceData.id, receipt: responseReceipt.data.d.receiptHistory});
+                                      }).catch(function (error) {
+                                        // console.error(error);
+                                        getItem();
+                                      });
+                                      getItem();
+                                    })
+                                  });
+
+                                  Promise.all(execute2).then((result2) => {
+                                    // console.log(result2);
+                                    v['invoiceData'] = result2;
+                                    status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                                    // console.log(status);
+                                    $('#progress').text(status)
+                                    resolve(v);
+                                  });
+                                }else{
+                                  status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                                  // console.log(status);
+                                  $('#progress').text(status)
+                                  resolve(v);
+                                }
+                              }).catch(function (error) {
+                                // console.error(error);
+                                getInvoice();
+                              });
+                              getInvoice();
+                            }else{
+                              status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                              // console.log(status);
+                              $('#progress').text(status)
+                              resolve(v);
+                            }
+                          }else{
+                            status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                            // console.log(status);
+                            $('#progress').text(status)
+                            resolve(v);
+                          }
+                        }else{
+                          status = '('+ Math.ceil(progress++ * 100 / execute.length) +'%)';
+                          // console.log(status);
+                          $('#progress').text(status)
+                          resolve(v);
+                        }
+                      }).catch(function (error) {
+                        // console.error(error);
+                        getCustomer();
+                      });
+                      getCustomer();
+                    });
+                  });  
+                  
+              // console.log(customer);
+
+              Promise.all(execute).then((result) => {
+                // console.log(result);
+                Swal.close();
+              });
+            },
+            getInvoicesData(){
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  invoices = [],
+                  pageCount = 1,
+                  executeInvoices = [],
+                  progress = 0;
+
+              self.waitProcessing(progress, executeInvoices.length, false, true, 'Please wait processing get invoices!');
+              
+              const getInvoicesId = (page) => axios.request({
+                method: 'POST',
+                url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                params: {
+                  scope: 'sales-invoice_view'
+                },
+                headers: {
+                  Authorization: 'Bearer '+ authUser.token,
+                  'X-Session-ID': authUser.session,
+                  'Content-Type': 'application/json'
+                },
+                data: {
+                  fields: 'id,number,customer,totalAmount,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail',
+                  'sp.page': 1,
+                  'sp.pageSize': 100,
+                  'filter.branchId.op': 'EQUAL',
+                  'filter.branchId.val': $('select[name="invoice_branch"]').val() == 'ALL' ? [52,101,50,350] : $('select[name="invoice_branch"]').val(),
+                  'filter.dueDate.op': 'BETWEEN',
+                  'filter.dueDate.val': [self.dateFillter.startDate, self.dateFillter.endDate]
+                }
+              }).then(function (response) {
+                // console.log(response.data);
+                let data = response.data;
+
+                if(data.s = true){
+                  if(page <= data.sp.pageCount){
+                    // console.log(invoices);
+                    TableInvoices.clear().rows.add(invoices).draw();
+                  }else{
+                    for (let page = 1; page <= data.sp.pageCount; page++) {
+                      let getExecuteInvoices= new Promise((resolve, reject) => {
+                        const getInvoices = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                          params: {
+                            scope: 'sales-invoice_view'
+                          },
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {
+                            fields: 'id,number,customer,totalAmount,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail',
+                            'sp.page': page,
+                            'sp.pageSize': 100,
+                            'filter.branchId.op': 'EQUAL',
+                            'filter.branchId.val': $('select[name="invoice_branch"]').val() == 'ALL' ? [52,101,50,350] : $('select[name="invoice_branch"]').val(),
+                            'filter.dueDate.op': 'BETWEEN',
+                            'filter.dueDate.val': [self.dateFillter.startDate, self.dateFillter.endDate]
+                          }
+                        }).then(function (response) {
+                          let data = response.data;
+                          // console.log(data);
+                          self.waitProcessing(progress++, executeInvoices.length, false, false, 'Please wait processing get invoices!');
+                          resolve(data.d)
+                        }).catch(function (error) {
+                          // console.error(error);
+                          getInvoices(page);
+                        })
+                        getInvoices(page);
+                      });
+                      executeInvoices.push(getExecuteInvoices);
+                    }
+                    Promise.all(executeInvoices).then((result) => {
+                      // console.log(result);
+                      let unionInvoice = [];
+                      result.map(function(o){ unionInvoice = _.union(unionInvoice, o)});
+                      // console.log(unionInvoice);
+                      self.waitProcessing(progress, executeInvoices.length, true, false, 'Please wait processing get invoices!');
+                      TableInvoices.clear().rows.add(unionInvoice).draw();
+                    });
+                  }
+                }
+              }).catch(function (error) {
+                // console.error(error);
+                getInvoicesId();
+              });
+
+              getInvoicesId();
+            },
+            getPembayaranData(){
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  invoices = [],
+                  pageCount = 1,
+                  executeInvoices = [],
+                  progress = 0;
+
+              self.waitProcessing(progress, executeInvoices.length, false, true, 'Please wait processing get invoice receipt!');
+              
+              const getInvoicesId = (page) => axios.request({
+                method: 'POST',
+                url: 'https://zeus.accurate.id/accurate/api/sales-receipt/list.do',
+                params: {
+                  scope: 'sales-receipt_view'
+                },
+                headers: {
+                  Authorization: 'Bearer '+ authUser.token,
+                  'X-Session-ID': authUser.session,
+                  'Content-Type': 'application/json'
+                },
+                data: {
+                  fields: 'id,number,customer,approvalStatus,branch,totalPayment,chequeAmount,charField2,charField3,charField1,transDate,detailInvoice,totalDiscount,bank',
+                  'sp.page': 1,
+                  'sp.pageSize': 100,
+                  'filter.branchId.op': 'EQUAL',
+                  'filter.branchId.val': $('select[name="pembayaran_branch"]').val() == 'ALL' ? [50, 52, 101, 350] : $('select[name="pembayaran_branch"]').val(),
+                  'filter.transDate.op': 'BETWEEN',
+                  'filter.transDate.val': [self.dateFillter.startDate, self.dateFillter.endDate]
+                }
+              }).then(function (response) {
+                // console.log(response.data);
+                let data = response.data;
+
+                if(data.s = true){
+                  if(page <= data.sp.pageCount){
+                    // console.log(invoices);
+                    TablePembayaranPrint.clear().rows.add(invoices).draw();
+                  }else{
+                    for (let page = 1; page <= data.sp.pageCount; page++) {
+                      let getExecuteInvoices= new Promise((resolve, reject) => {
+                        const getInvoices = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-receipt/list.do',
+                          params: {
+                            scope: 'sales-receipt_view'
+                          },
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {
+                            fields: 'id,number,customer,approvalStatus,branch,totalPayment,chequeAmount,charField2,charField3,charField1,transDate,detailInvoice,totalDiscount,bank',
+                            'sp.page': page,
+                            'sp.pageSize': 100,
+                            'filter.branchId.op': 'EQUAL',
+                            'filter.branchId.val': $('select[name="pembayaran_branch"]').val() == 'ALL' ? [50, 52, 101, 350] : $('select[name="pembayaran_branch"]').val(),
+                            'filter.transDate.op': 'BETWEEN',
+                            'filter.transDate.val': [self.dateFillter.startDate, self.dateFillter.endDate]
+                          }
+                        }).then(function (response) {
+                          let data = response.data;
+                          // console.log(data);
+                          self.waitProcessing(progress++, executeInvoices.length, false, false, 'Please wait processing get invoices!');
+                          resolve(data.d)
+                        }).catch(function (error) {
+                          // console.error(error);
+                          getInvoices(page);
+                        })
+                        getInvoices(page);
+                      });
+                      executeInvoices.push(getExecuteInvoices);
+                    }
+                    Promise.all(executeInvoices).then((result) => {
+                      // console.log(result);
+                      let unionInvoice = [];
+                      result.map(function(o){ unionInvoice = _.union(unionInvoice, o)});
+                      // console.log(unionInvoice);
+                      self.waitProcessing(progress, executeInvoices.length, true, false, 'Please wait processing get invoices!');
+                      TablePembayaranPrint.clear().rows.add(unionInvoice).draw();
+                    });
+                  }
+                }
+              }).catch(function (error) {
+                // console.error(error);
+                getInvoicesId();
+              });
+
+              getInvoicesId();
+            },
+            getInvoicesData2(){
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  invoices = [],
+                  status = '',
+                  page = 1,
+                  pageCount = 1,
+                  executeInvoices = [];
+
+              const getInvoicesId = (page) => axios.request({
+                method: 'GET',
+                url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                params: {
+                  scope: 'sales-invoice_view',
+                  'fields': "id,number,customer,totalAmount,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail",
+                  'sp.page': page,
+                  'sp.pageSize': 100,
+                  'filter.dueDate.op': 'BETWEEN',
+                  'filter.dueDate.val': ['01/11/2022', '01/11/2022']
+                },
+                headers: {
+                  Authorization: 'Bearer '+ authUser.token,
+                  'X-Session-ID': authUser.session,
+                  'Content-Type': 'application/json'
+                }
+              }).then(function (response) {
+                // console.log(response.data);
+                let data = response.data;
+
+                if(data.s = true){
+                  if(data.d.length > 0){
+                    data.d.map(function(r){
+                      invoices.push(r);
+                    });
+                    page++
+                    // console.log(page);
+                    if(page <= data.sp.pageCount) {
+                      getInvoicesId(page);
+                    }else{
+                      // console.log(invoices);
+                      TableInvoices.clear().rows.add(invoices).draw();
+                    }
+                  }
+                }
+              }).catch(function (error) {
+                // console.error(error);
+                getInvoicesId(page);
+              });
+
+              getInvoicesId(page);
+            },
+            getInvoicesData1(){
+              let self  = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  invoices = [],
+                  status = '',
+                  page = 1;
+
+              const getInvoicesId = (page) => axios.request({
+                method: 'GET',
+                url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                params: {
+                  scope: 'sales-invoice_view',
+                  'sp.page': page,
+                  'sp.pageSize': 100,
+                  'filter.dueDate.op': 'BETWEEN',
+                  'filter.dueDate.val': ['01/11/2022', '01/11/2022']
+                },
+                headers: {
+                  Authorization: 'Bearer '+ authUser.token,
+                  'X-Session-ID': authUser.session,
+                  'Content-Type': 'application/json'
+                }
+              }).then(function (response) {
+                // console.log(response.data);
+                let data = response.data;
+
+                if(data.s = true){
+                  if(data.d.length > 0){
+                    data.d.map(function(r){
+                      let executeGetDetailInvoice= new Promise((resolve, reject) => {
+
+                        const getDetailInvoice = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                          params: {scope: 'sales-invoice_view'},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {id: r.id}
+                        }).then(function (response) {
+                          // console.log(response.data);
+                          resolve(response.data);
+                        }).catch(function (error) {
+                          // console.error(error);
+                          getDetailInvoice();
+                        });
+                        getDetailInvoice();
+                      })
+                      invoices.push(executeGetDetailInvoice);
+                    });
+                    page++
+                    // console.log(page);
+                    if(page <= data.sp.pageCount) {
+                      getInvoicesId(page);
+                    }else{
+                      // console.log(invoices);
+                      Promise.all(invoices).then((result) => {
+                        status = 'Import accurate online Finish';
+                        if(result.length == 0){
+                          Swal.fire(
+                            'Invoices!',
+                            'Your Invoice has been Empty.',
+                            'warning'
+                            )
+                        }else{
+                          // TableResult.clear().rows.add(self.resultProsess).draw();
+                          // console.log(result);
+                          Swal.close()
+                        }
+                      });
+                    }
+                  }
+                }
+              }).catch(function (error) {
+                // console.error(error);
+                getInvoicesId(page);
+              });
+
+              getInvoicesId(page);
+            },
+            printOut(){
+              let self = this,
+                    pages = Array.from(document.querySelectorAll('div[aria-label^="pdf-page-"]')),
+                    process = 0;
+              // console.log('printout preview');
+              var opt = {
+                margin:       [10,10,0,10],
+                filename:     'myfile.pdf',
+                image:        { type: 'jpeg', quality: 1},
+                html2canvas:  { scale: 2 },
+                jsPDF:        { 
+                  unit: 'mm',
+                  format: 'legal'
+                }
+              };
+              let worker = html2pdf()
+                  .set(opt)
+                  .from(pages[0]);
+    
+                worker = worker.toPdf(); // worker is now a jsPDF instance
+
+                self.waitProcessing(process, pages.length, false, true, 'Please wait processing preview invoices!');
+
+                if (pages.length > 1) {
+    
+                  // add each element/page individually to the PDF render process
+                  pages.slice(1).forEach((page, index) => {
+                    worker = worker
+                    //worker = worker.toPdf() // worker is now a jsPDF instance
+                      .get('pdf')
+                      .then(pdf => {
+                        pdf.addPage()
+                        setTimeout(() => {
+                          self.waitProcessing(process++, pages.length, false, false, 'Please wait processing preview invoices!');
+                        }, 500);
+                        // console.log(index);
+                      })
+                      .from(page)
+                      .toContainer()
+                      .toCanvas()
+                      .toPdf()
+                  })
+                  worker.output('datauristring').then(function(r){
+                    // console.log(r)
+
+                      self.waitProcessing(process, pages.length, true, false, 'Please wait processing preview invoices!');
+
+                    let printoutInvoiceModal = new bootstrap.Modal(document.getElementById('printoutInvoiceModal'))
+                    printoutInvoiceModal.show();
+                    const b64toUrl = async (base64Data) => {
+                      const r = await fetch(base64Data);
+                      const blob = await r.blob();
+                      url =  URL.createObjectURL(blob);
+                      document.getElementById('printoutInvoiceIframe').src = url;
+                    }
+                    b64toUrl(r);
+                  });
+                }else{
+                  Swal.fire(
+                    'Print!',
+                    'Your selected Invoice has been Empty.',
+                    'warning'
+                  )
+                }
+            },
+            getInvoicePrint(){
+              let self = this,
+                  authUser = JSON.parse(localStorage.authUser),
+                  invoices = [],
+                  process = 0;
+              
+              this.waitProcessing(process, invoices.length, false, true, 'Please wait processing get invoices!');
+
+              this.selectedInvoiceData.map(function(r){
+                // console.log(r);
+                let executeGetDetailInvoice= new Promise((resolve, reject) => {
+                  const getDetailInvoice = () => axios.request({
+                    method: 'POST',
+                    url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                    params: {scope: 'sales-invoice_view'},
+                    headers: {
+                      Authorization: 'Bearer '+ authUser.token,
+                      'X-Session-ID': authUser.session,
+                      'Content-Type': 'application/json'
+                    },
+                    data: {id: r.id}
+                  }).then(function (response) {
+                    // console.log(response.data);
+                    let invoiceData = response.data.d;
+
+                    // console.log(invoiceData.dueDate);
+                    // console.log(moment(invoiceData.dueDate).add(-5, 'years').format('DD/MM/YYYY'));
+
+                    const getCustomerInvoice = () => axios.request({
+                      method: 'POST',
+                      url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                      params: {scope: 'sales-invoice_view'},
+                      headers: {
+                        Authorization: 'Bearer '+ authUser.token,
+                        'X-Session-ID': authUser.session,
+                        'Content-Type': 'application/json'
+                      },
+                      data: {
+                        'branchFilter': [invoiceData.branchId],
+                        'filter.outstanding': true,
+                        'filter.customerId.val': invoiceData.customer.id,
+                        'fields': 'id,number,customer,totalAmount,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail',
+                        'sp.page': 1,
+                        'sp.pageSize': 500,
+                        'filter.dueDate.op': 'BETWEEN',
+                        'filter.dueDate.val': [moment(invoiceData.dueDate).add(-5, 'years').format('DD/MM/YYYY'), invoiceData.dueDate]
+                      }
+                    }).then(function (response2) {
+                      // console.log('invoiceOutstanding1');
+                      // console.log(response2);
+                      // console.log(response.data); 
+                      let customerInvoiceOutstanding = response2.data.d,
+                          filterIn = _.filter(customerInvoiceOutstanding, (r) => r.number != invoiceData.number),
+                          totalOutstanding = filterIn.length >= 1 ? _.sumBy(filterIn, 'totalAmount') : 0;
+
+                      invoiceData['invoiceOutStanding'] = totalOutstanding ;      
+                      invoiceData['invoicePiutang'] = customerInvoiceOutstanding;           
+                      self.waitProcessing(process++, invoices.length, false, false, 'Please wait processing get invoices!');
+                      resolve(invoiceData);
+                    }).catch(function (error) {
+                      // console.error(error);
+                      getCustomerInvoice();
+                    });
+                    getCustomerInvoice();
+
+                  }).catch(function (error) {
+                    // console.error(error);
+                    getDetailInvoice();
+                  });
+                  getDetailInvoice();
+                })
+                invoices.push(executeGetDetailInvoice);
+              })
+
+              Promise.all(invoices).then((result) => {
+                // console.log(result);
+                self.printOutInvoiceData = result;
+                self.waitProcessing(process, invoices.length, true, false, 'Processing get invoices finished!');
+                setTimeout(() => {
+                  // self.printOut();
+                  document.getElementById('printoutInvoiceIframe').src = 'print-invoice.html';
+                  let printoutInvoiceModal = new bootstrap.Modal(document.getElementById('printoutInvoiceModal'))
+                  printoutInvoiceModal.show();
+                  setTimeout(() => {
+                    let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                    // console.log(result);
+                    frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: result})));
+                  }, 1000);
+                }, 1311);
+              });
+
+            },
+            nextPageInvoicePrint(){
+              let self = this;
+              if(this.paginationInvoice.page < this.setInvoicePrintData.length) {
+                this.paginationInvoice.page++;
+                let page = this.paginationInvoice.page;
+                // console.log('s'+page);
+
+                if(page <= self.setInvoicePrintData.length){
+                  this.getInvoicePrint2(page);
+                }
+                let data = self.setInvoicePrintData[self.paginationInvoice.page-1]['result'];
+                // console.log(data);
+                setTimeout(() => {
+                  let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                  frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: data})));
+                  self.printInvoiceSetting();
+                }, 0);
+              }
+            },
+            backPageInvoicePrint(){
+              let self = this;
+              if(this.paginationInvoice.page > 1) {
+                this.paginationInvoice.page--;
+                let data = self.setInvoicePrintData[self.paginationInvoice.page-1]['result'];
+                setTimeout(() => {
+                  let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                  frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: data})));
+                  self.printInvoiceSetting();
+                }, 0);
+              }
+            },
+            nextPagePembayaran(){
+              let self = this;
+              if(this.paginationPembayaran.page < this.dataPembayaran.pageCount){
+                self.paginationPembayaran.page++
+                setTimeout(() => {
+                  let frame = window.frames['printoutPembayaranIframe'].contentWindow;
+                  frame.postMessage(btoa(JSON.stringify({type: 'Pembayaran Data', data: self.dataPembayaran})));
+                }, 0);
+              }
+            },
+            backPagePembayaran(){
+              let self = this;
+              if(this.paginationPembayaran.page > 1){
+                self.paginationPembayaran.page--;
+                setTimeout(() => {
+                  let frame = window.frames['printoutPembayaranIframe'].contentWindow;
+                  frame.postMessage(btoa(JSON.stringify({type: 'Pembayaran Data', data: self.dataPembayaran})));
+                }, 0);
+              }
+            },
+            getInvoicePrintRefresh(page){
+              let self = this,
+                  authUser = JSON.parse(localStorage.authUser)
+                  pageSize = 3,
+                  to = page + pageSize,
+                  go = page - 1,
+                  dataPage = _.slice(this.setInvoicePrintData, go, to),
+                  count = this.setInvoicePrintData.length / pageSize;
+
+              dataPage.map(function(selectedInvoiceData){
+                let invoices = [],
+                    index = _.findIndex(self.setInvoicePrintData, ['index', selectedInvoiceData.index]);
+                if(true){
+                  selectedInvoiceData.data.map(function(r){
+                    // console.log(r);
+                    let executeGetDetailInvoice= new Promise((resolve, reject) => {
+                      const getDetailInvoice = () => axios.request({
+                        method: 'POST',
+                        url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                        params: {scope: 'sales-invoice_view'},
+                        headers: {
+                          Authorization: 'Bearer '+ authUser.token,
+                          'X-Session-ID': authUser.session,
+                          'Content-Type': 'application/json'
+                        },
+                        data: {id: r.id}
+                      }).then(function (response) {
+                        // console.log(response.data);
+                        let invoiceData = response.data.d;
+    
+                        const getCustomerInvoice = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                          params: {scope: 'sales-invoice_view'},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {
+                            'branchFilter': [invoiceData.branchId],
+                            'filter.outstanding': true,
+                            'filter.customerId.val': invoiceData.customer.id,
+                            'fields': 'id,number,customer,totalAmount,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail',
+                            'sp.page': 1,
+                            'sp.pageSize': 500,
+                            'filter.dueDate.op': 'BETWEEN',
+                            'filter.dueDate.val': [moment(invoiceData.dueDate).add(-5, 'years').format('DD/MM/YYYY'), invoiceData.dueDate]
+                          }
+                        }).then(function (response2) {
+                          // console.log('invoiceOutstanding2');
+                          // console.log(response2);
+                          // console.log(response.data); 
+                          let customerInvoiceOutstanding = response2.data.d,
+                              filterIn = _.filter(customerInvoiceOutstanding, (r) => r.number != invoiceData.number),
+                              totalOutstanding = filterIn.length >= 1 ? _.sumBy(filterIn, 'totalAmount') : 0;
+    
+                          invoiceData['invoiceOutStanding'] = totalOutstanding ; 
+                          invoiceData['invoicePiutang'] = customerInvoiceOutstanding;           
+                          resolve(invoiceData);
+                          if ((index + 1) == self.paginationInvoice.page) {
+                            // console.log((index + 1));
+                          }
+                        }).catch(function (error) {
+                          // console.error(error);
+                          getCustomerInvoice();
+                        });
+                        getCustomerInvoice();
+    
+                      }).catch(function (error) {
+                        // console.error(error);
+                        getDetailInvoice();
+                      });
+                      getDetailInvoice();
+                    })
+                    invoices.push(executeGetDetailInvoice);
+                  })
+    
+                  Promise.all(invoices).then((result) => {
+                    // console.log(result);
+                    self.setInvoicePrintData[index]['result'] = result;
+                    // console.log(self.paginationInvoice.page+' = '+(parseInt(index) + 1))
+                    if(self.paginationInvoice.page == (parseInt(index) + 1)){
+                      setTimeout(() => {
+                        let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                        // console.log(frame);
+                        frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: result})));
+                      }, 0);
+                    }
+                  });
+                }
+              })
+            },
+            getInvoicePrint2(page){
+              let self = this,
+                  authUser = JSON.parse(localStorage.authUser)
+                  pageSize = 3,
+                  to = page + pageSize,
+                  go = page - 1,
+                  dataPage = _.slice(this.setInvoicePrintData, go, to),
+                  count = this.setInvoicePrintData.length / pageSize;
+
+              dataPage.map(function(selectedInvoiceData){
+                let invoices = [],
+                    index = _.findIndex(self.setInvoicePrintData, ['index', selectedInvoiceData.index]);
+                if(selectedInvoiceData.status){
+                  self.setInvoicePrintData[index]['status'] = false;
+                  selectedInvoiceData.data.map(function(r){
+                    // console.log(r);
+                    let executeGetDetailInvoice= new Promise((resolve, reject) => {
+                      const getDetailInvoice = () => axios.request({
+                        method: 'POST',
+                        url: 'https://zeus.accurate.id/accurate/api/sales-invoice/detail.do',
+                        params: {scope: 'sales-invoice_view'},
+                        headers: {
+                          Authorization: 'Bearer '+ authUser.token,
+                          'X-Session-ID': authUser.session,
+                          'Content-Type': 'application/json'
+                        },
+                        data: {id: r.id}
+                      }).then(function (response) {
+                        // console.log(response.data);
+                        let invoiceData = response.data.d;
+    
+                        const getCustomerInvoice = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do',
+                          params: {scope: 'sales-invoice_view'},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {
+                            'branchFilter': [invoiceData.branchId],
+                            'filter.customerId.val': invoiceData.customer.id,
+                            'fields': 'id,number,customer,totalAmount,shipDate,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail,primeDownPayment,primeOwing,primeReceipt,primeReturn',
+                            'sp.page': 1,
+                            'sp.pageSize': 500,
+                            'filter.dueDate.op': 'BETWEEN',
+                            'filter.dueDate.val': [moment(invoiceData.dueDate).add(-5, 'years').format('DD/MM/YYYY'), invoiceData.dueDate]
+                          }
+                        }).then(function (response2) {
+                          // console.log('invoiceOutstanding3');
+                          // console.log(response2);
+                          // console.log(response.data); 
+                          let customerInvoiceOutstanding = response2.data.d,
+                              filterIn = _.filter(customerInvoiceOutstanding, (r) => r.number != invoiceData.number),
+                              totalOutstanding = filterIn.length >= 1 ? _.sumBy(filterIn, 'totalAmount') : 0,
+                              totalPrimeOwing = filterIn.length >= 1 ? _.sumBy(filterIn, 'primeOwing') : 0,
+                              totalPrimeReceipt = filterIn.length >= 1 ? _.sumBy(filterIn, 'primeReceipt') : 0;
+    
+                          invoiceData['invoiceOutStanding'] = totalOutstanding ; 
+                          invoiceData['totalPrimeOwing'] = totalPrimeOwing ; 
+                          invoiceData['totalPrimeReceipt'] = totalPrimeReceipt ; 
+                          invoiceData['invoicePiutang'] = customerInvoiceOutstanding; 
+                          
+                          axios.request({
+                            method: 'POST',
+                            url: 'https://zeus.accurate.id/accurate/api/sales-receipt/list.do',
+                            params: {
+                              scope: 'sales-receipt_view'
+                            },
+                            headers: {
+                              Authorization: 'Bearer '+ authUser.token,
+                              'X-Session-ID': authUser.session,
+                              'Content-Type': 'application/json'
+                            },
+                            data: {
+                              fields: 'id,number,customer,availableOverPay,totalPayment,chequeAmount,totalDiscount',
+                              'sp.page': 1,
+                              'sp.pageSize': 500,
+                              'filter.customerId.val': invoiceData.customer.id,
+                              'filter.transDate.op': 'BETWEEN',
+                              'filter.transDate.val': [moment(invoiceData.dueDate).add(-5, 'years').format('DD/MM/YYYY'), invoiceData.dueDate]
+                            }
+                          }).then(function (dataCereipt) {
+                            let customerCereipt = dataCereipt.data.d,
+                              filterInOverPay = _.filter(customerCereipt, (r) => r.availableOverPay != 0),
+                              totalOverPay = filterInOverPay.length >= 1 ? _.sumBy(filterInOverPay, 'availableOverPay') : 0,
+                              totalPayments =  _.sumBy(customerCereipt, 'totalPayment'),
+                              chequeAmount =  _.sumBy(customerCereipt, 'chequeAmount');
+                              totalDiscountReceipt =  _.sumBy(customerCereipt, 'totalDiscount');
+    
+                            invoiceData['availableOverPay'] = totalOverPay ; 
+                            invoiceData['overPay'] = filterInOverPay; 
+                            invoiceData['totalPayment'] = totalPayments;
+                            invoiceData['totalChequeAmount'] = chequeAmount;
+                            invoiceData['totalOverPay'] = chequeAmount - totalPayments;
+                            invoiceData['totalDiscountReceipt'] = totalDiscountReceipt;
+
+                            resolve(invoiceData);
+                            if ((index + 1) == self.paginationInvoice.page) {
+                              // console.log((index + 1));
+                            }
+                          }).catch(function (error) {
+                            // console.error(error);
+                            getCustomerInvoice();
+                          });
+                        }).catch(function (error) {
+                          // console.error(error);
+                          getCustomerInvoice();
+                        });
+                        getCustomerInvoice();
+    
+                      }).catch(function (error) {
+                        // console.error(error);
+                        getDetailInvoice();
+                      });
+                      getDetailInvoice();
+                    })
+                    invoices.push(executeGetDetailInvoice);
+                  })
+    
+                  Promise.all(invoices).then((result) => {
+                    // console.log('invoice print 2');
+                    // console.log(result);
+                    self.setInvoicePrintData[index]['result'] = result;
+                    // console.log(self.paginationInvoice.page+' = '+(parseInt(index) + 1))
+                    if(self.paginationInvoice.page == (parseInt(index) + 1)){
+                      setTimeout(() => {
+                        let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                        // console.log(frame);
+                        frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: result})));
+                      }, 0);
+                      setTimeout(() => {
+                        let frame = window.frames['printoutInvoicePiutangIframe'].contentWindow;
+                        // console.log(frame);
+                        frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: result})));
+                      }, 0);
+                    }
+                  });
+                }
+              })
+
+            },
+            setInvoicePrint(){
+              let self = this;
+              this.paginationInvoice.page = 1;
+              this.setInvoicePrintData = _.chunk(this.selectedInvoiceData, 30).map(function(o,index){
+                return {
+                  index: index,
+                  status: true,
+                  data: o,
+                  result: []
+                }
+              })
+              if(this.setInvoicePrintData.length == 0 ){
+                setTimeout(() => {
+                  let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+                  // console.log(frame);
+                  frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: []})));
+                }, 0);
+              }
+              this.getInvoicePrint2(1);
+
+              let printoutInvoiceModal = new bootstrap.Modal(document.getElementById('printoutInvoiceModal'))
+              printoutInvoiceModal.show();
+
+              setTimeout(() => {
+                self.printInvoiceSetting();
+              }, 1000);
+            },
+            setInvoicePiutangPrint(){
+              let self = this;
+
+              let printoutInvoiceModal = new bootstrap.Modal(document.getElementById('printoutInvoicePiutangModal'))
+              printoutInvoiceModal.show();
+
+              setTimeout(() => {
+                let frame = window.frames['printoutInvoicePiutangIframe'].contentWindow;
+                frame.postMessage(btoa(JSON.stringify({type: 'Invoice Data', data: self.selectedPiutangData})));
+                // self.printInvoiceSetting();
+              }, 1000);
+            },
+            paginationPrintInvoice(){
+
+            },
+            getPembayaranPrint(){
+              let printoutPembayaranModal = new bootstrap.Modal(document.getElementById('printoutPembayaranModal'))
+              printoutPembayaranModal.show();
+              let self = this;
+              self.paginationPembayaran.page = 1;
+              setTimeout(() => {
+                let frame = window.frames['printoutPembayaranIframe'].contentWindow;
+                // console.log(result);
+                frame.postMessage(btoa(JSON.stringify({type: 'Pembayaran Data', data: self.dataPembayaran})));
+                self.printPembayaranSetting();
+              }, 1000);
+            },
+            printPembayaran(){
+              let iframe = document.getElementById('printoutPembayaranIframe');
+              iframe.contentWindow.print();
+            },
+            deletedPembayaran(){
+              let self = this;
+              // console.log(self.selectedPembayaranData);
+              Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    icon:'info',
+                    imageUrl: 'three-dots.svg',
+                    text: 'Please wait processing Deleted!',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                  });
+                  let goReceipt = [];
+                  if(self.selectedPembayaranData.length != 0) {
+                    self.selectedPembayaranData.map((receipt) => {
+                      let executeDeleteReceipt = new Promise((resolveReceipt, rejectReceipt) => {
+                        const DeleteReceipt = () => axios.request({
+                          method: 'POST',
+                          url: 'https://zeus.accurate.id/accurate/api/sales-receipt/delete.do',
+                          params: {scope: 'sales_receipt_delete'},
+                          headers: {
+                            Authorization: 'Bearer '+ authUser.token,
+                            'X-Session-ID': authUser.session,
+                            'Content-Type': 'application/json'
+                          },
+                          data: {id: receipt.id }
+                        }).then(function (responseReceipt) {
+                          // console.log(responseReceipt)
+                          resolveReceipt(responseReceipt.data);
+                        }).catch(function (errorReceipt) {
+                          // console.error(errorReceipt);
+                          DeleteReceipt();
+                        });
+
+                        DeleteReceipt();
+                      });
+                      goReceipt.push(executeDeleteReceipt);
+                    })
+                    // console.log(goReceipt);
+                    Promise.all(goReceipt).then((resultReceipt) => {
+                      // console.log(resultReceipt)
+                      Swal.close();
+                      setTimeout(() => {
+                        self.getPembayaranData();
+                      }, 500);
+                    })
+                  }else{
+                    // console.log('no delete');
+                    Swal.close();
+                  }
+                }
+              })
+            },
+            printInvoice(){
+              let iframe = document.getElementById('printoutInvoiceIframe');
+              iframe.contentWindow.print();
+            },
+            printInvoicePiutang(){
+              let iframe = document.getElementById('printoutInvoicePiutangIframe');
+              iframe.contentWindow.print();
+            },
+            printInvoiceSetting(){
+              let self = this;
+              // console.log(this.printSetting);
+              self.printInvoiceShow = 'block'; 
+              self.printSettingInvoiceShow = false;
+              route.send('setting-print-invoice', JSON.stringify(self.printSetting)).then((r) => {
+                  // console.log(r)
+              });
+              let frame = window.frames['printoutInvoiceIframe'].contentWindow;
+              frame.postMessage(btoa(JSON.stringify({type: 'Print Setting', data: self.printSetting})));
+            },
+            printInvoiceSettingPiutang(){
+              let self = this;
+              // console.log(this.printSetting);
+              self.printInvoiceShow = 'block'; 
+              self.printSettingInvoiceShow = false;
+              route.send('setting-print-invoice', JSON.stringify(self.printSetting)).then((r) => {
+                  // console.log(r)
+              });
+              let frame = window.frames['printoutInvoicePiutangIframe'].contentWindow;
+              frame.postMessage(btoa(JSON.stringify({type: 'Print Setting', data: self.printSetting})));
+            },
+            printPembayaranSetting(){
+              let self = this;
+              // console.log(this.printSetting);
+              self.printPembayaranShow = 'block'; 
+              self.printSettingPembayaranShow = false;
+              route.send('setting-print-pembayaran', JSON.stringify(self.printSettingPembayaran)).then((r) => {
+                  // console.log(r)
+              });
+              let frame = window.frames['printoutPembayaranIframe'].contentWindow;
+              frame.postMessage(btoa(JSON.stringify({type: 'Print Setting', data: self.printSettingPembayaran})));
+            },
+            waitProcessing(progress, execute, loadClose, loadShow, message){
+              let status = '';
+              // console.log(execute)
+              // console.log(progress)
+              // console.log(message)
+              if(loadShow){
+                Swal.mixin({
+                  customClass: {
+                    confirmButton: 'btn btn-primary'
+                  },
+                  buttonsStyling: false
+                }).fire({
+                  icon:'info',
+                  imageUrl: 'three-dots.svg',
+                  text: message,
+                  showConfirmButton: true,
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  footer: '<span id="progress">(0%)</span>',
+                  confirmButtonText:'<i class="fa fa-ban"></i> Stop!',
+                }).then((result) => {
+                  // console.log(result);
+                  if(result.isConfirmed){
+                    location.reload();
+                  }
+                });
+              };
+
+              
+              status = execute > 1 ? '('+ Math.ceil(progress * 100 / execute) +'%)' : '(0%)';
+              // console.log(status);
+              $('#progress').text(status);
+              
+              if(loadClose){
+                setTimeout(() => {
+                  Swal.close();
+                }, 1300);
+              }
+
+            },
+            getNumber(v){
+              return $.number(v);
+            },
+            getMoment(dates,type, format){
+              if(dates != ''){
+                let date = moment(dates).format('DD/MM/YYYY');
+                return format ? moment(date).format(format) : type ? moment(date).format('DD/MM/YYYY') : moment(date).format('DD MMMM YYYY');
+              }else{
+                return moment().format('DD MMMM YYYY');
+              }
+            },
+            getCabang(branchId){
+              switch (branchId) {
+                case 52:
+                    return {cabang: 'Surabaya', kota:'Surabaya'};
+                  break;
+                case 50:
+                    return {cabang: 'Gandaria', kota:'Jakarta'};
+                  break;
+                case 350:
+                    return {cabang: 'Bekasi', kota:'Bekasi'};
+                  break;
+                case 101:
+                    return {cabang: 'Kota Kasablanka', kota:'Jakarta'};
+                  break;
+              
+                default:
+                  return {cabang: 'Kota Kasablanka', kota:'Jakarta'};
+                  break;
+              }
+            }
+        },
+        mounted() {
+            // console.log('mounted')
+        }
+      }).mount('#App')
+    </script>
+    <script>
+
+      const TableResult = $('#TableResult').DataTable({
+        data: [],
+        columns: [
+            { data: 'd'},
+            { data: null, render: function(o) {return o.s ? 'Berhasil' : 'Gagal'} },
+        ],
+      });
+
+      const TableInvoice = $('#TableInvoice').DataTable({
+        data: [],
+        scrollX: true,
+        columns: [
+            { data: null, render: function(o) {return o['TANGGAL'] ? moment(o['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY') : ''} },
+            { data: null, render: function(o) {return o['NO. REFERENSI'] ? o['NO. REFERENSI'] : '';} },
+            { data: null, render: function(o) {return o['ID JOB DETAIL'] ? o['ID JOB DETAIL'] : '';} },
+            { data: null, render: function(o) {return o['NAMA PELANGGAN'] ? o['NAMA PELANGGAN'] : '';} },
+            { data: null, render: function(o) {return o['KETERANGAN JASA'] ? o['KETERANGAN JASA'] : '';} },
+            { data: null, render: function(o) {return o['NAMA DEPT'] ? o['NAMA DEPT'] : '';} },
+            { data: null, render: function(o) {return o['QTY'] ? o['QTY'] : '';} },
+            { data: null, render: function(o) {return o['HARGA'] ? $.number(o['HARGA']) : '';} },
+            { data: null, render: function(o) {return o['DISKON (%)'] ? o['DISKON (%)'] : '';} },
+            { data: null, render: function(o) {return o['NOTE DETAIL'] ? o['NOTE DETAIL'] : '';} },
+            { data: null, render: function(o) {return o['DELETE ITEM'] ? o['DELETE ITEM'] : '';} },
+            { data: null, render: function(o) {return o['DELETE INVOICE'] ? o['DELETE INVOICE'] : '';} },
+        ],
+      });
+      
+      const TablePembayaran = $('#TablePembayaran').DataTable({
+        data: [],
+        scrollX: true,
+        columns: [
+            { data: null, render: function(o) {return o['TANGGAL'] ? moment(o['TANGGAL'], 'DD-MM-YYYY').add(1, 'days').format('DD/MM/YYYY') : ''} },
+            { data: null, render: function(o) {return o['NO. INVOICE'] ? o['NO. INVOICE'] : '';} },
+            { data: null, render: function(o) {return o['NO. KONTRAK'] ? o['NO. KONTRAK'] : '';} },
+            { data: null, render: function(o) {return o['NO. KWITANSI'] ? o['NO. KWITANSI'] : '';} },
+            { data: null, render: function(o) {return o['PELANGGAN'] ? o['PELANGGAN'] : '';} },
+            { data: null, render: function(o) {return o['PAKET BERLANGGANAN'] ? o['PAKET BERLANGGANAN'] : '';} },
+            { data: null, render: function(o) {return o['PERIODE'] ? o['PERIODE'] : '';} },
+            { data: null, render: function(o) {return o['PIUTANG'] ? $.number(o['PIUTANG']) : '';} },
+            { data: null, render: function(o) {return o['DEBET'] ? $.number(o['DEBET']) : '';} }
+        ],
+      });
+
+      const TableCustomer = $('#TableCustomer').DataTable({
+        data: [],
+        scrollX: true,
+        columns: [
+            { data: null, render: function(o) {return o['NOMOR CUSTOMER'] ? o['NOMOR CUSTOMER'] : '';} },
+            { data: null, render: function(o) {return o['NAME CUSTOMER'] ? o['NAME CUSTOMER'] : '';} },
+            { data: null, render: function(o) {return o['UPDATE CUSTOMER'] ? o['UPDATE CUSTOMER'] : '';} },
+            { data: null, render: function(o) {return o['DELETE CUSTOMER'] ? o['DELETE CUSTOMER'] : '';} },
+        ],
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        authUser = JSON.parse(localStorage.authUser),
+
+        // Daterangepicker
+        $('input[name="daterange_invoices_filter"]').daterangepicker({
+            "autoApply": false,
+            opens: 'right',
+            locale: {
+                format: 'DD/MM/YYYY'
+            },
+            startDate: moment().add(-2, 'month'),
+            endDate: moment(),
+        }, function(start, end, label) {
+          let startDate = moment(start).format('DD/MM/YYYY'),
+              endDate   = moment(end).format('DD/MM/YYYY');
+            App.$data.dateFillter.startDate = startDate;
+            App.$data.dateFillter.endDate = endDate;
+        });
+
+        $('input[name="daterange_invoices_filter"]').on('apply.daterangepicker', function(ev, picker) {
+          setTimeout(() => {
+            App.getInvoicesData();
+          }, 500);
+        });
+
+        $('input[name="daterange_pembayaran_filter"]').daterangepicker({
+            opens: 'right',
+            locale: {
+                format: 'DD/MM/YYYY'
+            },
+            startDate: moment().add(-2, 'month'),
+            endDate: moment(),
+        }, function(start, end, label) {
+          let startDate = moment(start).format('DD/MM/YYYY'),
+              endDate   = moment(end).format('DD/MM/YYYY');
+            App.$data.dateFillter.startDate = startDate;
+            App.$data.dateFillter.endDate = endDate;
+        });
+
+        $('input[name="daterange_pembayaran_filter"]').on('apply.daterangepicker', function(ev, picker) {
+          setTimeout(() => {
+            App.getPembayaranData();
+          }, 500);
+        });
+
+        $('#customer_selected').select2( {
+            theme: "bootstrap-5",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+            placeholder: 'Select Category',
+            ajax: {
+              method: 'GET',
+              delay: 250,
+              url: 'https://zeus.accurate.id/accurate/api/customer/list.do',
+              params: {'scope': 'customer_view'},
+              headers: {
+                Authorization: 'Bearer '+ authUser.token,
+                'X-Session-ID': authUser.session,
+                'Content-Type': 'application/json'
+              },
+              data: function (params) {
+                  let query = {
+                        "filter.keywords.op": "CONTAIN",
+                        "filter.keywords.val": params.term,
+                        "sp.page": params.page || 1,
+                        "fields": "id,customerNo,name,branch",
+                        'filter.branchId.op': 'EQUAL',
+                        "filter.branchId.val": $('#customer_branch').val() == 'ALL' ? [52,101,50,350] : $('#customer_branch').val()
+                      };
+                      console.log(query);
+                  // Query parameters will be ?search=[term]&page=[page]
+                  return query;
+              },
+              processResults: function (response, params) {
+                  let data = response.s ? response.d.map((o) => {return {id: o.id, text: _.truncate(o.name, {length:40}), number: o.customerNo, branch : o.branch}}) : [{id:null, text: "No Data"}];
+                  // console.log(response);
+                  return {
+                      results: data,
+                      pagination: {
+                          more: response.sp.page != response.sp.pageCount
+                      }
+                  };
+              },
+              cache: true
+          }
+        });
+        $('#customer_selected').on('select2:select', function (e) {
+            // console.log(e.params.data);
+            TableCustomerInvoices.ajax.reload();
+        });
+      });
+
+      $(function(){
+        setTimeout(() => {
+          
+          // Datepicker
+          $('input[name="tanggal_terbit"]').datepicker({format: "dd/mm/yyyy", autoclose: true});
+          $('input[name="tanggal_terbit"]').datepicker().on("changeDate", function(e) {
+            App.$data.printSetting.tanggal_terbit = $(this).val();
+          });
+          
+          // Datepicker
+          $('input[name="tanggal_tempo"]').datepicker({format: "dd/mm/yyyy", autoclose: true});
+          $('input[name="tanggal_tempo"]').datepicker().on("changeDate", function(e) {
+            App.$data.printSetting.tanggal_tempo = $(this).val();
+          });
+  
+          // Datepicker
+          $('input[name="tanggal_pemutusan"]').datepicker({format: "dd/mm/yyyy", autoclose: true});
+          $('input[name="tanggal_pemutusan"]').datepicker().on("changeDate", function(e) {
+            App.$data.printSetting.tanggal_pemutusan = $(this).val();
+          });
+        }, 1000);
+      })
+    </script>
+    <!-- #Script Datatables Selected -->
+    <script>
+      let authUser = JSON.parse(localStorage.authUser),
+          customerSelected = $('#customer_selected').val();
+
+      const TableInvoices = $('#table-invoices').DataTable({
+        columns: [
+            { 
+              data: null, 
+              class:'dt-center',
+              defaultContent:''
+            },
+            { name: 'Nomor', data: 'number'},
+            { name: 'Due Date', data: 'dueDate'},
+            { name: 'Pelanggan', data: 'customer.name'},
+            { name: 'Nomor Pelanggan', data: 'customer.customerNo'},
+            { name: 'Status', data: 'statusName'},
+            { name: 'Approval', data: 'approvalStatus'},
+            { name: 'Total', data: 'totalAmount'},
+            { name: 'Cabang', data: 'branch.name'},
+
+        ],
+        columnDefs: [ 
+          {
+            "name": "engine",
+            className: 'select-checkbox',
+            sortable: false,
+            targets: 0,
+            width:10,
+        } ],
+        order: [[ 1, 'asc' ]],
+        dom: 'Bfrtip',
+        "buttons": [
+            { "extend": 'showSelected', "text":'Show Selected',"className": 'btn btn-outline-primary btn-xs' },
+            { "action": function(){
+              TableInvoices.rows( { search: 'applied' } ).select();
+            }, "text":'Select All',"className": 'btn btn-outline-primary btn-xs-custome' },
+            { "action": function(){
+              TableInvoices.rows( { search: 'applied' } ).deselect();
+            }, "text":'Unselect All',"className": 'btn btn-outline-primary btn-xs-custome' }
+        ],
+        paging: true,
+        pageLength: 100,
+        ordering: true,
+        scrollX: true,
+        scrollY: '50vh',
+        scrollCollapse: true,
+        info: true,
+        language: {
+          search: 'Search',
+        },
+        select: {
+            style: 'multi',
+            selector: 'td:first-child'
+        },
+      });
+
+      $('#table-invoices-selected-all').on('click', function(e){
+        // console.log('selected all');
+        $(this).toggleClass('selected');
+        $(this).hasClass('selected') ? TableInvoices.rows().select() : TableInvoices.rows().deselect();
+      });
+
+      TableInvoices.on( 'select', function ( e, dt, type, indexes ) {
+        // console.log('select')
+        App.$data.selectedInvoiceData = TableInvoices.rows({ selected: true }).data().toArray();
+      });
+
+      TableInvoices.on( 'deselect', function ( e, dt, type, indexes ) {
+        // console.log('deselect')
+        App.$data.selectedInvoiceData = TableInvoices.rows({ selected: true }).data().toArray();
+      });
+
+      const TableCustomerInvoices = $('#table-Customerinvoices').DataTable({
+        ajax: {
+          type: 'POST',
+          url: 'https://zeus.accurate.id/accurate/api/sales-invoice/list.do?scope=sales-invoice_view',
+          headers: {
+            Authorization: 'Bearer '+ authUser.token,
+            'X-Session-ID': authUser.session
+          },
+          data: function(d){
+            d['filter.outstanding'] = true;
+            d['filter.customerId.val'] = parseInt($('#customer_selected').val());
+            d['fields'] = "id,number,customer,totalAmount,shipDate,subTotal,statusName,approvalStatus,dueDate,branch,itemDetail,primeReceipt";
+            d['sp.page'] = 1;
+            d['sp.pageSize'] = 500;
+          },
+          dataSrc: function ( r ) {
+            return r.s ? r.d : '';
+          },
+          error: function (xhr, error, code) {
+            // console.log(xhr, code);
+            setTimeout(() => {
+              location.reload();
+            }, 2000);
+          }
+        },
+        columns: [
+            {    
+              data: null, 
+              class:'dt-center',
+              defaultContent:''
+            },
+            { name: 'Nomor', data: null, render: function(o){return o.number}},
+            { name: 'Due Date', data: null, render: function(o){return o.dueDate}},
+            { name: 'Pelanggan', data: null, render: function(o){return o.customer.name}},
+            { name: 'Nomor Pelanggan', data: null, render: function(o){return o.customer.customerNo}},
+            { name: 'Status', data: null, render: function(o){return o.statusName}},
+            { name: 'Approval', data: null, render: function(o){return o.approvalStatus}},
+            { name: 'Total', data: null, render: function(o){return o.totalAmount}},
+            { name: 'Bayar', data: null, render: function(o){return o.primeReceipt}},
+            { name: 'Sisa', data: null, render: function(o){return o.totalAmount - o.primeReceipt}},
+            { name: 'Cabang', data: null, render: function(o){return o.branch.name}},
+
+        ],
+        columnDefs: [ 
+          {
+            "name": "engine",
+            className: 'select-checkbox',
+            sortable: false,
+            targets: 0,
+            width:10,
+        } ],
+        order: [[ 1, 'asc' ]],
+        dom: 'Bfrtip',
+        "buttons": [
+            { "extend": 'showSelected', "text":'Show Selected',"className": 'btn btn-outline-primary btn-xs' },
+            { "action": function(){
+              TableCustomerInvoices.rows( { search: 'applied' } ).select();
+            }, "text":'Select All',"className": 'btn btn-outline-primary btn-xs-custome' },
+            { "action": function(){
+              TableCustomerInvoices.rows( { search: 'applied' } ).deselect();
+            }, "text":'Unselect All',"className": 'btn btn-outline-primary btn-xs-custome' }
+        ],
+        paging: true,
+        pageLength: 100,
+        ordering: true,
+        scrollX: true,
+        scrollY: '50vh',
+        scrollCollapse: true,
+        info: true,
+        language: {
+          search: 'Search',
+        },
+        select: {
+            style: 'multi',
+            selector: 'td:first-child'
+        },
+      });
+
+      TableCustomerInvoices.on( 'select', function ( e, dt, type, indexes ) {
+        // console.log('select')
+        App.$data.selectedPiutangData = TableCustomerInvoices.rows({ selected: true }).data().toArray();
+      });
+
+      TableCustomerInvoices.on( 'deselect', function ( e, dt, type, indexes ) {
+        // console.log('deselect')
+        App.$data.selectedPiutangData = TableCustomerInvoices.rows({ selected: true }).data().toArray();
+      });
+
+      const TablePembayaranPrint = $('#table-pembayaran-print').DataTable({
+        columns: [
+            { 
+              data: null, 
+              class:'dt-center',
+              defaultContent:''
+            },
+            { name: 'Nomor', data: 'number'},
+            { name: 'Tanggal', data: 'transDateView'},
+            { name: 'Pelanggan', data: 'customer.name'},
+            { name: 'Nomor Pelanggan', data: 'customer.customerNo'},
+            { name: 'Approval', data: 'approvalStatus'},
+            { name: 'Payment', data: 'totalPayment'},
+            { name: 'Diskon', data: 'totalDiscount'},
+            { name: 'Cabang', data: 'branch.name'},
+            { name: 'Kode Bank', data: null, render: function(d){ return d.bank.no}},
+            { name: 'Bank', data: null, render: function(d){ return d.bank.name}}
+        ],
+        columnDefs: [ 
+          {
+            "name": "engine",
+            className: 'select-checkbox',
+            sortable: false,
+            targets: 0,
+            width:10,
+        } ],
+        order: [[ 1, 'asc' ]],
+        dom: 'Bfrtip',
+        "buttons": [
+            { "extend": 'showSelected', "text":'Show Selected',"className": 'btn btn-outline-primary btn-xs' },
+            { "action": function(){
+              TablePembayaranPrint.rows( { search: 'applied' } ).select();
+            }, "text":'Select All',"className": 'btn btn-outline-primary btn-xs-custome' },
+            { "action": function(){
+              TablePembayaranPrint.rows( { search: 'applied' } ).deselect();
+            }, "text":'Unselect All',"className": 'btn btn-outline-primary btn-xs-custome' }
+        ],
+        paging: true,
+        pageLength: 100,
+        ordering: true,
+        scrollX: true,
+        scrollY: '50vh',
+        scrollCollapse: true,
+        info: true,
+        language: {
+          search: 'Search',
+        },
+        select: {
+            style: 'multi',
+            selector: 'td:first-child'
+        },
+      });
+
+      $('#table-pembayaran-print-selected-all').on('click', function(e){
+        $(this).toggleClass('selected');
+        $(this).hasClass('selected') ? TablePembayaranPrint.rows().select() : TablePembayaranPrint.rows().deselect();
+      });
+
+      TablePembayaranPrint.on( 'select', function ( e, dt, type, indexes ) {
+        // console.log('select')
+        App.$data.selectedPembayaranData = TablePembayaranPrint.rows({ selected: true }).data().toArray();
+      });
+
+      TablePembayaranPrint.on( 'deselect', function ( e, dt, type, indexes ) {
+        // console.log('deselect')
+        App.$data.selectedPembayaranData = TablePembayaranPrint.rows({ selected: true }).data().toArray();
+      });
+
+      var tabEl = document.querySelector('button[data-bs-toggle="tab"]')
+      tabEl.addEventListener('shown.bs.tab', function (event) {
+        // console.log('oke')
+        setTimeout(() => {
+          TableInvoices.columns.adjust().draw();
+        }, 100);
+      })
+
+      var tabEl = document.querySelector('.tab-pembayaran')
+      tabEl.addEventListener('hide.bs.tab', function (event) {
+        setTimeout(() => {
+          TablePembayaran.columns.adjust().draw();
+        }, 200);
+      })
+    </script>
+  </body>
+</html>
