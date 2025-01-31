@@ -4,6 +4,7 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: 'accurate.ico'
   },
   rebuildConfig: {},
   makers: [
@@ -11,6 +12,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         name: 'electron_app',
+        setupIcon: 'accurate.ico'
       },
     },
     {

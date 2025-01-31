@@ -41,32 +41,27 @@
       const { createApp } = Vue;
     </script>
     <style>
-        @media print{
-            @page {
-                size: 10in 14in ;
-                bleed: 6mm;
-                marks: crop cross;
-                font-family: arial;
+        @media print {
+            html, body {
+                margin: 0 auto !important;
+                padding: 0;
+                width: 21cm !important;
+                height: 300mm;
             }
-
-            @page:first {
-                size: 10in 14in ;
-                bleed: 6mm;
-                margin-top:0mm;
-                marks: crop cross;
+            .container {
+                width: 21cm !important;
             }
-            .chapter{
-                break-before: right;
-                min-width: 768;
-                margin:0px;
-                font-family: arial;
-            }
-        }       
+        }
+        @page {
+            size: 9.5in 11in;
+            margin: 0 !important;
+            padding: 0;
+        }
     </style>
   </head>
   <body>
-    <div id="App">
-      <div class="container">
+    <div id="App" style="width: initial; margin: 0; padding: 0;">
+      <div class="container" style="margin: auto;padding: 0px;width: initial;background: red; max-width: 100% !important;">
         <div class="row row-cols-lg-auto g-3 align-items-center mt-4" id="print-invoice">
             <div class="col-12"  style="width: 100%;" v-if="printOutInvoiceData.length == 0">
                 <div class="card border-0 chapter">
@@ -181,7 +176,7 @@
                                   </td>
                               </tr>
                               <tr>
-                                  <td colspan="2" class="border border-1 border-dark px-1">DPP Lain</td>
+                                  <td colspan="2" class="border border-1 border-dark px-1">DPP Nilai Lain</td>
                                   <td class="border border-1 border-dark px-1">
                                       <span>Rp</span>
                                       <span class="float-end" style="font-size:16px">{{getNumber(invoice.subTotal * 11 / 12) }}</span>
@@ -237,7 +232,7 @@
                           <div class="text-center mt-5 float-end" style="margin-right:15px">
                               <b>PT. ENVISION</b> <br>
                               <span style="display:block; padding:15px; width:100%; height:120px">
-                                  <!-- <img width="113" height="120" v-bind:src="printSetting.signature" v-if="printSetting.isSignature"> -->
+                                  <img width="113" height="120" v-bind:src="printSetting.signature" v-if="printSetting.isSignature">
                               </span>
                               <span class="fw-bold">
                                   {{printSetting.name}} <br>
@@ -247,7 +242,7 @@
                           </div>
                       </div>
                       <div class="col-12" v-if="invoicePage == detailItem(invoice.detailItem).length">
-                          <div class="text-center mt-5" v-bind:style="{marginTop:(5 - detailItem(invoice.detailItem)[invoicePage-1].length) * 51+'px !important'}">
+                          <div class="text-center mt-5" v-bind:style="{marginTop:(5 - detailItem(invoice.detailItem)[invoicePage-1].length) * 10+'px !important'}">
                             <p class="lh-sm" style="font-family: f0-2; font-size: 16px;" v-if="invoice.branchId == 50 && printSetting.footer.gandaria == ''">
                               Informasi Pembayaran Dapat Menghubungi: PT Envision ( Pusat ), Alamat : Gandaria 8 Lt. 6 Unit H, Kawasan Gandaria City Mall <br>
                               Kebayoran Lama Utara, Jakarta Selatan DKI Jakarta - 12240 NPWP : 21.137.860.9-013.000 <br><br>

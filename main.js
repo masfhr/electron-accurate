@@ -64,7 +64,7 @@ function createWindow () {
     }
   }, 3000);
 
-  mainWindow.setMenu(null)
+  mainWindow.setMenu()
 
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
